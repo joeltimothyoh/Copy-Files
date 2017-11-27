@@ -23,8 +23,8 @@ function Copy-Files {
 
     # Batch of files / folders to copy
     $sources = @( 
-        # 'C:\Users\username\Documents\Project1',
-        # 'C:\Users\username\Documents\report.doc',
+        #'C:\Users\username\Documents\Project1',
+        #'C:\Users\username\Documents\report.doc',
         # 'D:\Git\Project1\Repository3'  
     )
 
@@ -47,11 +47,23 @@ function Copy-Files {
         '*.git'
     )
 
-    # Define command variable
-    $cmd = 'robocopy'
-    
     # Get properties of each source specified
     $items = Get-Item $sources -Force
+
+    # Return if either sources or destinations are not specified, or if all sources are invalid
+    if ($sources.count -eq 0) {
+        Write-Output "Sources are not set. Exiting."
+        return
+    } elseif ($destinations.count -eq 0) {
+        Write-Output "Destinations are not set. Exiting."
+        return
+    } elseif ($items.count -eq 0) {
+        Write-Output "All sources are invalid. Exiting."
+        return
+    }
+
+    # Define command variable
+    $cmd = 'robocopy'
 
     # Debug     
     Write-Output "Sources:" $sources ""
