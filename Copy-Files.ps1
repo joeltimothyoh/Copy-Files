@@ -10,6 +10,7 @@ function Copy-Files {
     The Robocopy /MIR parameter is left out by default. /MIR specifies robocopy to make a mirror copy of the source directory in the destination directory. Use /MIR with caution as it will delete files in the destination not present in the source. 
     The Robocopy /XF parameter excludes files with matching name from all operations.
     The Robocopy /XD parameter excludes folders with a matching name from all operations.
+    The Robocopy /E parameter is enabled by default. /E specifies robocopy to copy all subdirectories, including empty ones
     Files that are specified under sources will not have /MIR, /E, /S passed along with them, so as to prevent folders within the same directory from being copied as well, a behavior of Robocopy when specific files are copied with any one of those parameters passed.
     Run 'robocopy /?' for usage information.
       
@@ -38,7 +39,7 @@ function Copy-Files {
 
     # Robocopy copy options
     $robocopy_options = @(
-        #'/E' 
+        '/E' 
         #'/S' 
         #'/MIR'
         #'/XX'        
@@ -47,10 +48,10 @@ function Copy-Files {
         #'/XF'
         #'Examplefile.doc'
         #'*.log'
-        '/XD'          
+        #'/XD'          
         #'nameoffolderstoexclude'
         #'subfolder1'
-        '*.git'
+        #'*.git'
         #'/L'
     )
 
