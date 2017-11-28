@@ -35,22 +35,26 @@ function Copy-Files {
         #'\\SERVER1\projects\project1'
     )
 
-    # Robocopy copy options
+    # Robocopy copy options. Run 'robocopy /?' for usage information.
     $robocopy_options = @(
-        '/E'                        # Copy subdirectories including empty ones 
+        '/E'                        # Copy subdirectories including empty ones
         #'/S'                       # Copy subdirectories excluding empty ones
         #'/MIR'                     # Mirror copy, equivalent to /E plus /PURGE
-        #'/XL'                      # Exclude files only present in source      (Prevent addition)
-        #'/XX'                      # Exclude files only present in destination (Prevent deletion)
-        #'/XA:H'                    # Exlcude hidden files
-        #'/XF'                      # Exclude files with matching names or wildcards
+        #'/XL'                      # Exclude copying of lonely files only present in source
+        #'/XX'                      # Exclude deleting of extra files only present in destination
+        #'/XA:H'                    # Exclude hidden files from all operations
+        #'/SL'                      # Copy symbolic links instead of targets
+        #'/XF'                      # Exclude files with matching names or wildcards from all operations
         #'readme.txt'
         #'*.log'
-        #'/XD'                      # Exclude directories with matching names or wildcards
+        #'/XD'                      # Exclude directories with matching names or wildcards from all operations
         #'subfolder1'
         #'misc'
         #'*.git'
-        #'/L'                       # List only, no copying, deleting, or timestamping (Mock mode)
+        #'/L'                       # List only, no copying, deleting, or timestamping (Mock mode)        
+        #'/V'                       # Show verbose output
+        #'/NJH'                     # No job header
+        #'/NJs'                     # No job summary
     )
 
     # Get properties of each source specified
