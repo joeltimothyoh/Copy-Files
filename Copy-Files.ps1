@@ -3,13 +3,13 @@
 function Copy-Files {
     <#
     .SYNOPSIS
-    Copy-Files will copy select files and folders to specified destination(s).
+    Copy-Files will copy select files and directories to specified destination(s).
     
     .DESCRIPTION
-    Copy-Files will copy select files and folders to specified destination(s) using Robocopy.
+    Copy-Files will copy select files and directories to specified destination(s) using Robocopy.
     The Robocopy /E parameter is enabled by default. /E specifies robocopy to copy all subdirectories, including empty ones.
     The Robocopy /MIR parameter is left out by default. /MIR specifies robocopy to make a mirror copy of the source directory in the destination directory. Use /MIR with caution as it will delete files in the destination not present in the source.
-    Files that are specified as sources will not have /MIR, /E or /S passed along with them, so as to prevent folders within the same directory from being copied as well, a behavior of Robocopy when specific files are copied with any one of those parameters passed.
+    Files that are specified as sources will not have /MIR, /E or /S passed along with them, so as to prevent directories within the same directory from being copied as well, a behavior of Robocopy when specific files are copied with any one of those parameters passed.
     Run 'robocopy /?' for usage information.
       
     .EXAMPLE
@@ -21,18 +21,18 @@ function Copy-Files {
 
     Param()
 
-    # Files or directories to copy
+    # Files and directories to copy
     $sources = @( 
-        #'C:\Users\username\Documents\Project1'
-        #'C:\Users\username\Documents\report.doc'
-        #'D:\Git\Project1\Repository3'  
+       # 'C:\Users\username\Documents\Project1'
+       # 'C:\Users\username\Documents\report.doc'
+       # 'D:\Git\Project1\Repository3'  
     )
 
     # Destination directories
     $destinations = @(
-        #'E:\Backup\AllProjects'
-        #'G:\backupfolder\scripts'
-        #'\\SERVER1\projects\project1'
+       # 'E:\Backup\AllProjects'
+       # 'G:\backupfolder\scripts'
+       # '\\SERVER1\projects\project1'
     )
 
     # Robocopy copy options. Run 'robocopy /?' for usage information.
@@ -54,7 +54,7 @@ function Copy-Files {
         #'/L'                       # List only, no copying, deleting, or timestamping (Mock mode)        
         #'/V'                       # Show verbose output
         #'/NJH'                     # No job header
-        #'/NJs'                     # No job summary
+        #'/NJS'                     # No job summary
     )
 
     # Get properties of each source specified
@@ -93,7 +93,7 @@ function Copy-Files {
             Write-Host "Item Attributes: $($item.Attributes)" -ForegroundColor Yellow
             Write-Host "Source: $($item.FullName)" -ForegroundColor Yellow
             
-            # Define parameters depending on whether source is a file or folder
+            # Define parameters depending on whether source is a file or directory
             if ($item.Attributes -match 'Archive') {    # match is used as $item.Attributes returns a string of attributes
                 $prm = $item.DirectoryName, $destination, $item.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S')})    # /MIR, /E, /S will be ignored for file sources
             } 
