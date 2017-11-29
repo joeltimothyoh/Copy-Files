@@ -1,25 +1,22 @@
-# Copy-Files. 
+<#
+.SYNOPSIS
+Copy-Files will copy select files and directories to specified destination(s).
+
+.DESCRIPTION
+Specified sources, destinations, and robocopy options will be used to make copy operations.
+Files and directories can be used as sources.
+For more information on robocopy options, run 'robocopy /?'
+
+.EXAMPLE
+.\Copy-Files
+
+.NOTES
+
+#>
+
+Param()
 
 function Copy-Files {
-    <#
-    .SYNOPSIS
-    Copy-Files will copy select files and directories to specified destination(s).
-    
-    .DESCRIPTION
-    Copy-Files will copy select files and directories to specified destination(s) using Robocopy.
-    The Robocopy /E parameter is enabled by default. /E specifies robocopy to copy all subdirectories, including empty ones.
-    The Robocopy /MIR parameter is left out by default. /MIR specifies robocopy to make a mirror copy of the source directory in the destination directory. Use /MIR with caution as it will delete files in the destination not present in the source.
-    Files that are specified as sources will not have /MIR, /E or /S passed along with them, so as to prevent directories within the same directory from being copied as well, a behavior of Robocopy when specific files are copied with any one of those parameters passed.
-    Run 'robocopy /?' for usage information.
-      
-    .EXAMPLE
-    An example
-    
-    .NOTES
-    General notes
-    #>
-
-    Param()
 
     # Files and directories to copy
     $sources = @( 
@@ -37,24 +34,24 @@ function Copy-Files {
 
     # Robocopy copy options. Run 'robocopy /?' for usage information.
     $robocopy_options = @(
-        '/E'                        # Copy subdirectories including empty ones
-        #'/S'                       # Copy subdirectories excluding empty ones
-        #'/MIR'                     # Mirror copy, equivalent to /E plus /PURGE
-        #'/XL'                      # Exclude copying of lonely files only present in source
-        #'/XX'                      # Exclude deleting of extra files only present in destination
-        #'/XA:H'                    # Exclude hidden files from all operations
-        #'/SL'                      # Copy symbolic links instead of targets
-        #'/XF'                      # Exclude files with matching names or wildcards from all operations
-        #'readme.txt'
-        #'*.log'
-        #'/XD'                      # Exclude directories with matching names or wildcards from all operations
-        #'subfolder1'
-        #'misc'
-        #'*.git'
-        #'/L'                       # List only, no copying, deleting, or timestamping (Mock mode)        
-        #'/V'                       # Show verbose output
-        #'/NJH'                     # No job header
-        #'/NJS'                     # No job summary
+       # '/E'                       # Copy subdirectories including empty ones
+       # '/S'                       # Copy subdirectories excluding empty ones
+       # '/MIR'                     # Mirror copy, equivalent to /E plus /PURGE
+       # '/XL'                      # Exclude copying of lonely files only present in source
+       # '/XX'                      # Exclude deleting of extra files only present in destination
+       # '/XA:H'                    # Exclude hidden files from all operations
+       # '/SL'                      # Copy symbolic links instead of targets
+       # '/XF'                      # Exclude files with matching names or wildcards from all operations
+       # 'readme.txt'
+       # '*.log'
+       # '/XD'                      # Exclude directories with matching names or wildcards from all operations
+       # 'subfolder1'
+       # 'misc'
+       # '*.git'
+       # '/L'                       # List only, no copying, deleting, or timestamping (Mock mode)        
+       # '/V'                       # Show verbose output
+       # '/NJH'                     # No job header
+       # '/NJS'                     # No job summary
     )
 
     # Get properties of each source specified
@@ -103,7 +100,7 @@ function Copy-Files {
 
             # Execute Robocopy with set parameters
             Write-Host "Executing:" $cmd $prm -ForegroundColor DarkGray
-            & $cmd $prm            
+            & $cmd $prm
         }
     }  
 
