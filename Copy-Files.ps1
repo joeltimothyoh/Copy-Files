@@ -1,20 +1,16 @@
 <#
 .SYNOPSIS
-Copy-Files will copy select files and directories to specified destination(s).
+Copies files and directories to specified destination(s) using Robocopy.
 
 .DESCRIPTION
 Specified sources, destinations, and robocopy options will be used to make copy operations.
-Files and directories can be used as sources.
+Both files and directories can be used as sources.
 For more information on robocopy options, run 'robocopy /?'
 
 .EXAMPLE
-.\Copy-Files
-
-.NOTES
+.\Copy-Files.ps1
 
 #>
-
-Param()
 
 function Copy-Files {
 
@@ -106,6 +102,7 @@ function Copy-Files {
 
     # Signal End
     Write-Host "END" -ForegroundColor Red
+
 }
 
 # Call function

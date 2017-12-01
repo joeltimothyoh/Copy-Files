@@ -1,1 +1,2 @@
-robocopy-options.txt
+*.txt
+*.psm1
