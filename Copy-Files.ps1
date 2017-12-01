@@ -12,43 +12,49 @@ For more information on robocopy options, run 'robocopy /?'
 
 #>
 
+###################   Files and directories to copy   ###################
+
+$sources = @(
+# 'C:\Users\username\Documents\Project1'
+# 'C:\Users\username\Documents\report.doc'
+# 'D:\Git\Project1\Repository3'
+)
+
+######################   Destination directories   ######################
+
+$destinations = @(
+# 'E:\Backup\AllProjects'
+# 'G:\backupfolder\scripts'
+# '\\SERVER1\projects\project1'
+)
+
+#########################   Robocopy options   ##########################
+
+# Refer to Robocopy's documentation for more options
+$robocopy_options = @(
+# '/E'                       # Copy subdirectories including empty ones
+# '/S'                       # Copy subdirectories excluding empty ones
+# '/MIR'                     # Mirror copy, equivalent to /E plus /PURGE
+# '/XL'                      # Exclude copying of lonely files only present in source
+# '/XX'                      # Exclude deleting of extra files only present in destination
+# '/XA:H'                    # Exclude hidden files from all operations
+# '/SL'                      # Copy symbolic links instead of targets
+# '/XF'                      # Exclude files with matching names or wildcards from all operations
+# 'readme.txt'
+# '*.log'
+# '/XD'                      # Exclude directories with matching names or wildcards from all operations
+# 'subfolder1'
+# 'misc'
+# '*.git'
+# '/L'                       # List only, no copying, deleting, or timestamping (Mock mode)
+# '/V'                       # Show verbose output
+# '/NJH'                     # No job header
+# '/NJS'                     # No job summary
+)
+
+#########################################################################
+
 function Copy-Files {
-
-    # Files and directories to copy
-    $sources = @( 
-       # 'C:\Users\username\Documents\Project1'
-       # 'C:\Users\username\Documents\report.doc'
-       # 'D:\Git\Project1\Repository3'  
-    )
-
-    # Destination directories
-    $destinations = @(
-       # 'E:\Backup\AllProjects'
-       # 'G:\backupfolder\scripts'
-       # '\\SERVER1\projects\project1'
-    )
-
-    # Robocopy copy options. Run 'robocopy /?' for usage information.
-    $robocopy_options = @(
-       # '/E'                       # Copy subdirectories including empty ones
-       # '/S'                       # Copy subdirectories excluding empty ones
-       # '/MIR'                     # Mirror copy, equivalent to /E plus /PURGE
-       # '/XL'                      # Exclude copying of lonely files only present in source
-       # '/XX'                      # Exclude deleting of extra files only present in destination
-       # '/XA:H'                    # Exclude hidden files from all operations
-       # '/SL'                      # Copy symbolic links instead of targets
-       # '/XF'                      # Exclude files with matching names or wildcards from all operations
-       # 'readme.txt'
-       # '*.log'
-       # '/XD'                      # Exclude directories with matching names or wildcards from all operations
-       # 'subfolder1'
-       # 'misc'
-       # '*.git'
-       # '/L'                       # List only, no copying, deleting, or timestamping (Mock mode)        
-       # '/V'                       # Show verbose output
-       # '/NJH'                     # No job header
-       # '/NJS'                     # No job summary
-    )
 
     # Get properties of each source specified
     $items = Get-Item $sources -Force

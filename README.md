@@ -6,6 +6,8 @@ Specified sources, destinations, and robocopy options will be used to make copy 
 Both files and directories can be used as sources.
 
 ## Usage
+Fill in the sources, destinations, and robocopy options within the .ps1 script. Then manually run, or set the script to run on a schedule.
+
 .\Copy-Files.ps1
 
 ## Compatibility
