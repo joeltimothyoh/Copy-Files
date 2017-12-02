@@ -34,22 +34,26 @@ $destinations = @(
 $robocopy_options = @(
 # '/E'                       # Copy subdirectories including empty ones
 # '/S'                       # Copy subdirectories excluding empty ones
-# '/MIR'                     # Mirror copy, equivalent to /E plus /PURGE
-# '/XL'                      # Exclude copying of lonely files only present in source
-# '/XX'                      # Exclude deleting of extra files only present in destination
-# '/XA:H'                    # Exclude hidden files from all operations
-# '/SL'                      # Copy symbolic links instead of targets
+# '/PURGE'                   # Remove files or directories in destination no longer existing in source
+# '/MIR'                     # Mirrored copy. Equivalent to /E plus /PURGE
+# '/IF'                      # Copy files with matching names or wildcards
+# '*.jpg'
+# '*.docx'
 # '/XF'                      # Exclude files with matching names or wildcards from all operations
 # 'readme.txt'
 # '*.log'
 # '/XD'                      # Exclude directories with matching names or wildcards from all operations
-# 'subfolder1'
 # 'misc'
 # '*.git'
-# '/L'                       # List only, no copying, deleting, or timestamping (Mock mode)
+# '/SL'                      # Copy symbolic links instead of targets
+# '/XL'                      # Exclude copying of files only present in source
+# '/XX'                      # Exclude removal of files only present in destination
+# '/XA:SH'                   # Exclude copying of system and hidden files
+# '/L'                       # List only mode, no copying, deleting, or timestamping
 # '/V'                       # Show verbose output
 # '/NJH'                     # No job header
 # '/NJS'                     # No job summary
+# '/LOG+:C:\pathto\log.txt'  # Append output to log file
 )
 
 #########################################################################
