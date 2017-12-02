@@ -12,51 +12,51 @@ For more information on robocopy options, run 'robocopy /?'
 
 #>
 
-###################   Files and directories to copy   ###################
+########################   Files and directories to copy   ########################
 
 $sources = @(
-# 'C:\Users\username\Documents\Project1'
-# 'C:\Users\username\Documents\report.doc'
-# 'D:\Git\Project1\Repository3'
+    # 'C:\Users\username\Documents\Project1'
+    # 'C:\Users\username\Documents\report.doc'
+    # 'D:\Git\Project1\Repository3'
 )
 
-######################   Destination directories   ######################
+###########################   Destination directories   ###########################
 
 $destinations = @(
-# 'E:\Backup\AllProjects'
-# 'G:\backupfolder\scripts'
-# '\\SERVER1\projects\project1'
+    # 'E:\Backup\AllProjects'
+    # 'G:\backupfolder\scripts'
+    # '\\SERVER1\projects\project1'
 )
 
-#########################   Robocopy options   ##########################
+##############################   Robocopy options   ###############################
 
 # Refer to Robocopy's documentation for more options
 $robocopy_options = @(
-# '/E'                       # Copy subdirectories including empty ones
-# '/S'                       # Copy subdirectories excluding empty ones
-# '/PURGE'                   # Remove files or directories in destination no longer existing in source
-# '/MIR'                     # Mirrored copy. Equivalent to /E plus /PURGE
-# '/IF'                      # Copy files with matching names or wildcards
-# '*.jpg'
-# '*.docx'
-# '/XF'                      # Exclude files with matching names or wildcards from all operations
-# 'readme.txt'
-# '*.log'
-# '/XD'                      # Exclude directories with matching names or wildcards from all operations
-# 'misc'
-# '*.git'
-# '/SL'                      # Copy symbolic links instead of targets
-# '/XL'                      # Exclude copying of files only present in source
-# '/XX'                      # Exclude removal of files only present in destination
-# '/XA:SH'                   # Exclude copying of system and hidden files
-# '/L'                       # List only mode, no copying, deleting, or timestamping
-# '/V'                       # Show verbose output
-# '/NJH'                     # No job header
-# '/NJS'                     # No job summary
-# '/LOG+:C:\pathto\log.txt'  # Append output to log file
+    # '/E'                       # Copy subdirectories including empty ones
+    # '/S'                       # Copy subdirectories excluding empty ones
+    # '/PURGE'                   # Remove files or directories in destination no longer existing in source
+    # '/MIR'                     # Mirrored copy. Equivalent to /E plus /PURGE
+    # '/IF'                      # Copy files with matching names or wildcards
+    # '*.jpg'
+    # '*.docx'
+    # '/XF'                      # Exclude files with matching names or wildcards from all operations
+    # 'readme.txt'
+    # '*.log'
+    # '/XD'                      # Exclude directories with matching names or wildcards from all operations
+    # 'misc'
+    # '*.git'
+    # '/SL'                      # Copy symbolic links instead of targets
+    # '/XL'                      # Exclude copying of files only present in source
+    # '/XX'                      # Exclude removal of files only present in destination
+    # '/XA:SH'                   # Exclude copying of system and hidden files
+    # '/L'                       # List only mode, no copying, deleting, or timestamping
+    # '/V'                       # Show verbose output
+    # '/NJH'                     # No job header
+    # '/NJS'                     # No job summary
+    # '/LOG+:C:\pathto\log.txt'  # Append output to log file
 )
 
-#########################################################################
+###################################################################################
 
 function Copy-Files {
 
