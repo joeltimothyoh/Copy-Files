@@ -8,7 +8,7 @@ Both files and directories can be used as sources.
 ## Usage
 Fill in the sources, destinations, and robocopy options within the .ps1 script. Then manually run, or set the script to run on a schedule.
 
-## Example:
+## Example
 `.\Copy-Files-Batch-001.ps1`
 
 ## Compatibility
