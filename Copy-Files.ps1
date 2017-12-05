@@ -8,7 +8,7 @@ Both files and directories can be used as sources.
 For more information on robocopy options, run 'robocopy /?'
 
 .EXAMPLE
-.\Copy-Files.ps1
+.\Copy-Files-Batch-001.ps1
 
 #>
 
