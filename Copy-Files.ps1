@@ -60,58 +60,81 @@ $robocopy_options = @(
 
 function Copy-Files {
 
-    # Get properties of each source specified
-    $items = Get-Item $sources -Force
-
-    # Return if either sources or destinations are not specified, or if all sources are invalid
+    # Return if sources or destinations are not specified
     if ($sources.count -eq 0) {
-        Write-Output "Sources are not set. Exiting."
+        Write-Output "No sources were specified. Exiting."
         return
     } elseif ($destinations.count -eq 0) {
-        Write-Output "Destinations are not set. Exiting."
+        Write-Output "No destinations were specified. Exiting."
         return
-    } elseif ($items.count -eq 0) {
-        Write-Output "All sources are invalid. Exiting."
+    } 
+    
+    # Initialize a system array
+    $items = @()
+
+    # Check if each source specified exists. Store properties if they exist
+    foreach ($source in $sources)
+    {
+        try {
+            $valid_item = Get-Item $source -Force -ErrorAction Stop
+            $items += $valid_item
+        }
+        catch {
+            $e = $_.Exception.Gettype().Name           
+            if ($e -eq 'ItemNotFoundException') {
+                $invalid_sources += $source
+            }
+        }
+    }
+
+    # Return if all sources are invalid
+    if ($items.count -eq 0) {
+        Write-Output "All the sources specified do not exist. Exiting."
         return
     }
 
     # Define command variable
     $cmd = 'robocopy'
 
-    # Debug     
-    Write-Output "Sources:" $sources ""
-    Write-Output "Destinations:" $destinations ""
-    Write-Output "Items:" $items.Name ""
+    # Print variables to stdout
+    Write-Output "- - - - - - -  Started: $(Get-Date)  - - - - - - -"
+    Write-Output "`nSources:" $items.FullName
+    if ($invalid_sources) {
+        Write-Output "`nSources (Invalid):" $invalid_sources
+    }
+    Write-Output "`nDestinations:" $destinations
+    if ($robocopy_options) {
+        Write-Output "`nRobocopy Options: `n$robocopy_options"
+    }
 
     # Signal Start
-    Write-Host "START`n" -ForegroundColor Cyan
+    Write-Output "`n- - - -`n START`n- - - -"
 
     # Make a copy of all sources to each destination specified
     foreach ($destination in $destinations) {
-        Write-Host "Destination: $($destination)" -ForegroundColor Green
-        Write-Host "Robocopy Options: $($robocopy_options)`n" -ForegroundColor Magenta
+        Write-Output "`n> Destination: $($destination)"
         
         foreach ($item in $items) {
-            Write-Host "Item: $($item.Name)" -ForegroundColor Yellow
-            Write-Host "Item Attributes: $($item.Attributes)" -ForegroundColor Yellow
-            Write-Host "Source: $($item.FullName)" -ForegroundColor Yellow
+            Write-Output "`nSource: $($item.FullName)"
+            Write-Output "Item Attributes: $($item.Attributes)"
             
             # Define parameters depending on whether source is a file or directory
-            if ($item.Attributes -match 'Archive') {    # match is used as $item.Attributes returns a string of attributes
-                $prm = $item.DirectoryName, $destination, $item.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S')})    # /MIR, /E, /S will be ignored for file sources
+            if ($item.Attributes -match 'Archive') {        # match is used as $item.Attributes returns a string of attributes
+                $prm = $item.DirectoryName, $destination, $item.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S')})      # /MIR, /E, /S will be ignored for file sources
             } 
             elseif ($item.Attributes -match 'Directory') {
                 $prm = $item.FullName, "$($destination)\$($item.Name)" + $robocopy_options
             }
 
             # Execute Robocopy with set parameters
-            Write-Host "Executing:" $cmd $prm -ForegroundColor DarkGray
+            Write-Output "Command: $($cmd) $($prm)"
             & $cmd $prm
         }
     }  
 
     # Signal End
-    Write-Host "END" -ForegroundColor Red
+    Write-Output "`n- - -`n END`n- - -"
+    Write-Output "- - - - - - -  Ended: $(Get-Date)  - - - - - - -"
 
 }
 
