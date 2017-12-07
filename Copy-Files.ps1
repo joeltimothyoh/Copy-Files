@@ -69,9 +69,10 @@ function Copy-Files {
         return
     } 
     
-    # Initialize a system array
+    # Initialize arrays
     $items = @()
-
+    $invalid_sources = @()
+    
     # Check if each source specified exists. Store properties if they exist
     foreach ($source in $sources)
     {
@@ -99,11 +100,11 @@ function Copy-Files {
     # Print variables to stdout
     Write-Output "- - - - - - -  Started: $(Get-Date)  - - - - - - -"
     Write-Output "`nSources:" $items.FullName
-    if ($invalid_sources) {
+    if ($invalid_sources.count -gt 0) {
         Write-Output "`nSources (Invalid):" $invalid_sources
     }
     Write-Output "`nDestinations:" $destinations
-    if ($robocopy_options) {
+    if ($robocopy_options.count -gt 0) {
         Write-Output "`nRobocopy Options: `n$robocopy_options"
     }
 
@@ -120,7 +121,7 @@ function Copy-Files {
             
             # Define parameters depending on whether source is a file or directory
             if ($item.Attributes -match 'Archive') {        # match is used as $item.Attributes returns a string of attributes
-                $prm = $item.DirectoryName, $destination, $item.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S')})      # /MIR, /E, /S will be ignored for file sources
+                $prm = $item.DirectoryName, $destination, $item.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S') } )      # /MIR, /E, /S will be ignored for file sources
             } 
             elseif ($item.Attributes -match 'Directory') {
                 $prm = $item.FullName, "$($destination)\$($item.Name)" + $robocopy_options
