@@ -32,7 +32,7 @@ $destinations = @(
 
 # Refer to Robocopy's documentation for more options
 $robocopy_options = @(
-    # '/E'                       # Copy subdirectories including empty ones
+      '/E'                       # Copy subdirectories including empty ones
     # '/S'                       # Copy subdirectories excluding empty ones
     # '/PURGE'                   # Remove files or directories in destination no longer existing in source
     # '/MIR'                     # Mirrored copy. Equivalent to /E plus /PURGE
@@ -67,12 +67,12 @@ function Copy-Files {
     } elseif ($destinations.count -eq 0) {
         Write-Output "No destinations were specified. Exiting."
         return
-    } 
-    
+    }
+
     # Initialize arrays
     $items = @()
-    $invalid_sources = @()
-    
+    $invalid_items = @()
+
     # Check if each source specified exists. Store properties if they exist
     foreach ($source in $sources)
     {
@@ -81,9 +81,9 @@ function Copy-Files {
             $items += $valid_item
         }
         catch {
-            $e = $_.Exception.Gettype().Name           
+            $e = $_.Exception.Gettype().Name
             if ($e -eq 'ItemNotFoundException') {
-                $invalid_sources += $source
+                $invalid_items += $source
             }
         }
     }
@@ -100,8 +100,8 @@ function Copy-Files {
     # Print variables to stdout
     Write-Output "- - - - - - -  Started: $(Get-Date)  - - - - - - -"
     Write-Output "`nSources:" $items.FullName
-    if ($invalid_sources.count -gt 0) {
-        Write-Output "`nSources (Invalid):" $invalid_sources
+    if ($invalid_items.count -gt 0) {
+        Write-Output "`nSources (Invalid):" $invalid_items
     }
     Write-Output "`nDestinations:" $destinations
     if ($robocopy_options.count -gt 0) {
@@ -114,15 +114,15 @@ function Copy-Files {
     # Make a copy of all sources to each destination specified
     foreach ($destination in $destinations) {
         Write-Output "`n> Destination: $($destination)"
-        
+
         foreach ($item in $items) {
             Write-Output "`nSource: $($item.FullName)"
             Write-Output "Item Attributes: $($item.Attributes)"
-            
+
             # Define parameters depending on whether source is a file or directory
             if ($item.Attributes -match 'Archive') {        # match is used as $item.Attributes returns a string of attributes
                 $prm = $item.DirectoryName, $destination, $item.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S') } )      # /MIR, /E, /S will be ignored for file sources
-            } 
+            }
             elseif ($item.Attributes -match 'Directory') {
                 $prm = $item.FullName, "$($destination)\$($item.Name)" + $robocopy_options
             }
@@ -131,7 +131,7 @@ function Copy-Files {
             Write-Output "Command: $($cmd) $($prm)"
             & $cmd $prm
         }
-    }  
+    }
 
     # Signal End
     Write-Output "`n- - -`n END`n- - -"
