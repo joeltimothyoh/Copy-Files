@@ -47,8 +47,11 @@ $robocopy_options = @(
     # '*.git'
     # '/SL'                      # Copy symbolic links instead of targets
     # '/XL'                      # Exclude copying of files only present in source
-    # '/XX'                      # Exclude removal of files only present in destination
+    # '/XX'                      # Exclude removal of files only present in destination. A safety switch when used with /PURGE or /MIR
     # '/XA:SH'                   # Exclude copying of system and hidden files
+    # '/SEC'                     # Include security info
+    # '/COPY:DAT'                # Include specified file info. Default is /COPY:DAT (D=Data, A=Attributes, T=Timestamps)
+    # '/COPYALL'                 # Include all file info. Equivalent to /COPY:DATSOU (S=Security=NTFS ACLs, O=Owner info, U=Auditing info)
     # '/L'                       # List only mode, no copying, deleting, or timestamping
     # '/V'                       # Show verbose output
     # '/NJH'                     # No job header

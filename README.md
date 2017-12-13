@@ -14,4 +14,4 @@ To copy in batches, repeat the above steps for each batch of files and directori
 `.\Copy-Files-Batch-001.ps1`
 
 ## Compatibility
-This script currently only works with Windows.
+Copy-Files currently only works with Windows.
