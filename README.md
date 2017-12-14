@@ -1,5 +1,5 @@
 # Copy-Files
-Copies select files and directories to specified destination(s) using Robocopy.
+Copies specified files and directories to each specified destination using Robocopy.
 
 Specified sources, destinations, and robocopy options will be used to make copy operations.
 

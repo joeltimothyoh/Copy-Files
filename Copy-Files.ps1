@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Copies files and directories to specified destination(s) using Robocopy.
+Copies specified files and directories to each specified destination using Robocopy.
 
 .DESCRIPTION
 Specified sources, destinations, and robocopy options will be used to make copy operations.
@@ -15,17 +15,17 @@ For more information on robocopy options, run 'robocopy /?'
 ########################   Files and directories to copy   ########################
 
 $sources = @(
-    # 'C:\Users\username\Documents\Project1'
-    # 'C:\Users\username\Documents\report.doc'
-    # 'D:\Git\Project1\Repository3'
+    # 'C:\Users\username\Documents\Project 1\example folder'
+    # 'C:\Users\username\Documents\Project 1\example.docx'
+    # 'D:\Git\Project 1\repository2'
 )
 
 ###########################   Destination directories   ###########################
 
 $destinations = @(
-    # 'E:\Backup\AllProjects'
-    # 'G:\backupfolder\scripts'
-    # '\\SERVER1\projects\project1'
+    # 'E:\Backup\Projects\Project 1'
+    # '\\SERVER1\Projects\Project 1'
+    # '\\SERVER2\Shared\Projects\Project 1'
 )
 
 ##############################   Robocopy options   ###############################
