@@ -36,13 +36,13 @@ $robocopy_options = @(
     # '/S'                       # Copy subdirectories excluding empty ones
     # '/PURGE'                   # Remove files or directories in destination no longer existing in source
     # '/MIR'                     # Mirrored copy. Equivalent to /E plus /PURGE
-    # '/IF'                      # Copy files with matching names or wildcards
+    # '/IF'                      # Only copy the following files with matching names or wildcards
     # '*.jpg'
     # '*.docx'
-    # '/XF'                      # Exclude files with matching names or wildcards from all operations
+    # '/XF'                      # Exclude the following files with matching names or wildcards from all operations
     # 'readme.txt'
     # '*.log'
-    # '/XD'                      # Exclude directories with matching names or wildcards from all operations
+    # '/XD'                      # Exclude the following directories with matching names or wildcards from all operations
     # 'misc'
     # '*.git'
     # '/SL'                      # Copy symbolic links instead of targets
