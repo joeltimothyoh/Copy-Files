@@ -62,6 +62,9 @@ $robocopy_options = @(
 ###################################################################################
 
 function Copy-Files {
+    
+    # Signal Start
+    Write-Output "-------------  Copy-Files Started: $(Get-Date)  -------------"
 
     # Return if sources or destinations are not specified
     if ($sources.count -eq 0) {
@@ -70,6 +73,13 @@ function Copy-Files {
     } elseif ($destinations.count -eq 0) {
         Write-Output "No destinations were specified. Exiting."
         return
+    }
+
+    # Trim config arrays
+    $sources = $sources.Trim()
+    $destinations = $destinations.Trim()    
+    if ($robocopy_options.count -ne 0) {
+        $robocopy_options = $robocopy_options.Trim()
     }
 
     # Initialize arrays
@@ -101,7 +111,6 @@ function Copy-Files {
     $cmd = 'robocopy'
 
     # Print variables to stdout
-    Write-Output "- - - - - - -  Started: $(Get-Date)  - - - - - - -"
     Write-Output "`nSources:" $items.FullName
     if ($invalid_items.count -gt 0) {
         Write-Output "`nSources (Invalid):" $invalid_items
@@ -111,7 +120,7 @@ function Copy-Files {
         Write-Output "`nRobocopy Options: `n$robocopy_options"
     }
 
-    # Signal Start
+    # Signal start copy
     Write-Output "`n- - - -`n START`n- - - -"
 
     # Make a copy of all sources to each destination specified
@@ -136,9 +145,11 @@ function Copy-Files {
         }
     }
 
-    # Signal End
+    # Signal end copy
     Write-Output "`n- - -`n END`n- - -"
-    Write-Output "- - - - - - -  Ended: $(Get-Date)  - - - - - - -"
+
+    # Signal End
+    Write-Output "-------------   Copy-Files Ended: $(Get-Date)   -------------"
 
 }
 
