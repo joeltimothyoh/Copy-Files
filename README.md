@@ -5,7 +5,7 @@ Specified sources, destinations, and robocopy options will be used to make copy 
 
 Both files and directories can be used as sources.
 
-Sources and destinations can be local or network paths (e.g. 'C:\Folder' or '\\ServerName\Folder'). If neither is used (e.g. 'Folder'), the specified path will be taken to be a relative path from the working directory.
+Sources and destinations can either be local (e.g. `'C:\Folder'`) or network paths (e.g. `'\\ServerName\Folder'`). If neither is used (e.g. `'Folder'`), the specified path will be taken to be a relative path from the working directory.
 
 ## Usage
 Fill in the sources, destinations, and robocopy options within the .ps1 script. Then manually run, or set the script to run on a schedule.

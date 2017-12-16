@@ -5,9 +5,7 @@ Copies specified files and directories to each specified destination using Roboc
 .DESCRIPTION
 Specified sources, destinations, and robocopy options will be used to make copy operations.
 Both files and directories can be used as sources.
-Sources and destinations can be local or network paths (e.g. 'C:\Folder' or '\\ServerName\Folder'). If neither is used (e.g. 'Folder'), the specified path will be taken to be a relative path from the working directory.
-
-For more information on robocopy options, run 'robocopy /?'
+Sources and destinations can either be local (e.g. 'C:\Folder') or network paths (e.g. '\\ServerName\Folder'). If neither is used (e.g. 'Folder'), the specified path will be taken to be a relative path from the working directory.
 
 .EXAMPLE
 .\Copy-Files-Batch-001.ps1
