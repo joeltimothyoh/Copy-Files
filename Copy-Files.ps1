@@ -5,6 +5,8 @@ Copies specified files and directories to each specified destination using Roboc
 .DESCRIPTION
 Specified sources, destinations, and robocopy options will be used to make copy operations.
 Both files and directories can be used as sources.
+Paths can be LFS-type (e.g. 'C:\folder') or UNC-type (e.g. '\\Servername\folder'). If neither of is used (e.g. 'folder'), the specified path will be taken to be a relative path from the working directory.
+
 For more information on robocopy options, run 'robocopy /?'
 
 .EXAMPLE
@@ -36,13 +38,13 @@ $robocopy_options = @(
     # '/S'                       # Copy subdirectories excluding empty ones
     # '/PURGE'                   # Remove files or directories in destination no longer existing in source
     # '/MIR'                     # Mirrored copy. Equivalent to /E plus /PURGE
-    # '/IF'                      # Only copy the following files with matching names or wildcards
+    # '/IF'                      # Only copy files with matching names or wildcards
     # '*.jpg'
     # '*.docx'
-    # '/XF'                      # Exclude the following files with matching names or wildcards from all operations
+    # '/XF'                      # Exclude files with matching names or wildcards from all operations
     # 'readme.txt'
     # '*.log'
-    # '/XD'                      # Exclude the following directories with matching names or wildcards from all operations
+    # '/XD'                      # Exclude directories with matching names or wildcards from all operations
     # 'misc'
     # '*.git'
     # '/SL'                      # Copy symbolic links instead of targets
@@ -52,17 +54,18 @@ $robocopy_options = @(
     # '/SEC'                     # Include security info
     # '/COPY:DAT'                # Include specified file info. Default is /COPY:DAT (D=Data, A=Attributes, T=Timestamps)
     # '/COPYALL'                 # Include all file info. Equivalent to /COPY:DATSOU (S=Security=NTFS ACLs, O=Owner info, U=Auditing info)
-    # '/L'                       # List only mode, no copying, deleting, or timestamping
+    # '/L'                       # List-only mode, no copying, deleting, or timestamping
     # '/V'                       # Show verbose output
     # '/NJH'                     # No job header
     # '/NJS'                     # No job summary
-    # '/LOG+:C:\pathto\log.txt'  # Append output to log file
+    # '/LOG+:C:\pathto\log.txt'  # Append output to log file. Directory of log file must already exist
+    # '/TEE'                     # Output both to the console window and log file
 )
 
 ###################################################################################
 
 function Copy-Files {
-    
+
     # Signal Start
     Write-Output "-------------  Copy-Files Started: $(Get-Date)  -------------"
 
@@ -77,76 +80,110 @@ function Copy-Files {
 
     # Trim config arrays
     $sources = $sources.Trim()
-    $destinations = $destinations.Trim()    
+    $destinations = $destinations.Trim()
     if ($robocopy_options.count -ne 0) {
         $robocopy_options = $robocopy_options.Trim()
     }
 
-    # Initialize arrays
-    $items = @()
-    $invalid_items = @()
+    # Initialize source variables
+    $sources_valid = @()
+    $sources_invalid = @()
+    $sources_empty_cnt = 0
 
-    # Check if each source specified exists. Store properties if they exist
+    # Store valid and invalid sources into separate arrays, filtering out and counting number of empty strings
     foreach ($source in $sources)
     {
         try {
-            $valid_item = Get-Item $source -Force -ErrorAction Stop
-            $items += $valid_item
+            $source_valid = Get-Item $source -Force -ErrorAction Stop
+            $sources_valid += $source_valid
         }
         catch {
             $e = $_.Exception.Gettype().Name
             if ($e -eq 'ItemNotFoundException') {
-                $invalid_items += $source
+                $sources_invalid += $source
+            }
+            if ($e -eq 'ParameterBindingValidationException') {
+                $sources_empty_cnt++
             }
         }
     }
 
     # Return if all sources are invalid
-    if ($items.count -eq 0) {
-        Write-Output "All the sources specified do not exist. Exiting."
+    if ($sources_valid.count -eq 0) {
+        Write-Output "All the sources specified either cannot be found or are empty strings. Exiting."
+        return
+    }
+
+    # Initialize destination variables
+    $destinations_valid = @()
+    $destinations_empty_cnt = 0
+
+    # Store valid destinations into separate array, filtering out and counting number of empty strings
+    foreach ($destination in $destinations) {
+        if ($destination -ne '') {
+            $destinations_valid += $destination
+        }
+        if ($destination -eq '') {
+            $destinations_empty_cnt++
+        }
+    }
+
+    # Return if all destinations are null strings
+    if ($destinations_valid.count -eq 0) {
+        Write-Output "All destinations specified are empty strings. Exiting."
         return
     }
 
     # Define command variable
     $cmd = 'robocopy'
 
-    # Print variables to stdout
-    Write-Output "`nSources:" $items.FullName
-    if ($invalid_items.count -gt 0) {
-        Write-Output "`nSources (Invalid):" $invalid_items
+    # Signal Summary
+    Write-Host "`n- - - - -`n SUMMARY`n- - - - -" -ForegroundColor Cyan
+
+    # Print Summary
+    Write-Output "`nSources:" $sources_valid.FullName
+    if ($sources_invalid.count -gt 0) {
+        Write-Output "`nSources (Not Found):" $sources_invalid
     }
-    Write-Output "`nDestinations:" $destinations
-    if ($robocopy_options.count -gt 0) {
+    if ($sources_empty_cnt -gt 0) {
+        Write-Output "`nSources (Empty Strings): $sources_empty_cnt"
+    }
+    Write-Output "`nDestinations:" $destinations_valid
+    if ($destinations_empty_cnt -gt 0) {
+        Write-Output "`nDestinations (Empty Strings): $destinations_empty_cnt"
+    }
+    if ($robocopy_options.count -gt 0) { 
         Write-Output "`nRobocopy Options: `n$robocopy_options"
     }
 
     # Signal start copy
-    Write-Output "`n- - - -`n START`n- - - -"
+    Write-Host "`n`n- - - -`n START`n- - - -" -ForegroundColor Green
 
     # Make a copy of all sources to each destination specified
-    foreach ($destination in $destinations) {
-        Write-Output "`n> Destination: $($destination)"
+    foreach ($destination_valid in $destinations_valid) {
+        Write-Host "`nDestination: $destination_valid" -ForegroundColor Green -BackgroundColor Black
 
-        foreach ($item in $items) {
-            Write-Output "`nSource: $($item.FullName)"
-            Write-Output "Item Attributes: $($item.Attributes)"
+        foreach ($source_valid in $sources_valid) {
+            Write-Host "`nSource: $($source_valid.FullName)" -ForegroundColor Yellow -BackgroundColor Black
+            Write-Host "Type: $($source_valid.Attributes)" -ForegroundColor Yellow
 
             # Define parameters depending on whether source is a file or directory
-            if ($item.Attributes -match 'Archive') {        # match is used as $item.Attributes returns a string of attributes
-                $prm = $item.DirectoryName, $destination, $item.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S') } )      # /MIR, /E, /S will be ignored for file sources
+            if ($source_valid.Attributes -match 'Archive') {        # match is used as .Attributes property returns as a string of attributes
+                $prm = $source_valid.DirectoryName, $destination_valid, $source_valid.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S') } )      # /MIR, /E, /S will be ignored for file sources
             }
-            elseif ($item.Attributes -match 'Directory') {
-                $prm = $item.FullName, "$($destination)\$($item.Name)" + $robocopy_options
+            elseif ($source_valid.Attributes -match 'Directory') {
+                $prm = $source_valid.FullName, "$($destination_valid)\$($source_valid.Name)" + $robocopy_options
             }
 
             # Execute Robocopy with set parameters
-            Write-Output "Command: $($cmd) $($prm)"
+            Write-Host "Command: $($cmd) $($prm)" -ForegroundColor Yellow
             & $cmd $prm
         }
+
     }
 
     # Signal end copy
-    Write-Output "`n- - -`n END`n- - -"
+    Write-Host "`n- - -`n END`n- - -" -ForegroundColor Magenta
 
     # Signal End
     Write-Output "-------------   Copy-Files Ended: $(Get-Date)   -------------"
