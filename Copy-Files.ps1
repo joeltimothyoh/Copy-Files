@@ -69,7 +69,7 @@ function Copy-Files {
     # Signal Start
     Write-Output "-------------  Copy-Files Started: $(Get-Date)  -------------"
 
-    # Return if sources or destinations are not specified
+    # Return if sources or destinations are null
     if ($sources.count -eq 0) {
         Write-Output "No sources were specified. Exiting."
         return
@@ -90,7 +90,7 @@ function Copy-Files {
     $sources_invalid = @()
     $sources_empty_cnt = 0
 
-    # Store valid and invalid sources into separate arrays, filtering out and counting number of empty strings
+    # Store valid and invalid sources into separate arrays, and count the number of empty strings
     foreach ($source in $sources)
     {
         try {
@@ -118,7 +118,7 @@ function Copy-Files {
     $destinations_valid = @()
     $destinations_empty_cnt = 0
 
-    # Store valid destinations into separate array, filtering out and counting number of empty strings
+    # Store valid destinations into separate array, and count the number of empty strings
     foreach ($destination in $destinations) {
         if ($destination -ne '') {
             $destinations_valid += $destination
@@ -128,7 +128,7 @@ function Copy-Files {
         }
     }
 
-    # Return if all destinations are null strings
+    # Return if all destinations are empty strings
     if ($destinations_valid.count -eq 0) {
         Write-Output "All destinations specified are empty strings. Exiting."
         return
@@ -159,7 +159,7 @@ function Copy-Files {
     # Signal start copy
     Write-Host "`n`n- - - -`n START`n- - - -" -ForegroundColor Green
 
-    # Make a copy of all sources to each destination specified
+    # Make a copy of valid sources to each valid destination
     foreach ($destination_valid in $destinations_valid) {
         Write-Host "`nDestination: $destination_valid" -ForegroundColor Green -BackgroundColor Black
 
