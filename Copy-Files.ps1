@@ -79,7 +79,7 @@ function Copy-Files {
     # Trim config arrays
     $sources = $sources.Trim()
     $destinations = $destinations.Trim()
-    if ($robocopy_options.count -ne 0) {
+    if ($robocopy_options.count -gt 0) {
         $robocopy_options = $robocopy_options.Trim()
     }
 
