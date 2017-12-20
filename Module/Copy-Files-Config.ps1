@@ -1,7 +1,7 @@
 ﻿<#
 ## This script works together with the Copy-Files module.
 ## Ensure the Copy-Files module is correctly installed. Refer to Microsoft's documentation on installing Powershell modules.
-## Fill in the sources, destinations, and robocopy options within this script.
+## Specify the sources, destinations, and robocopy options within this script.
 ## Run this script to make copies of the specified files and directories.
 #>
 

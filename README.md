@@ -10,12 +10,12 @@ Copies specified files and directories to each specified destination using Roboc
 Copy-Files can either be used as a standalone script, or as a module together with separate configuration scripts. The Standalone script allows for greater portability and isolation, while the module allows for greater accessibility, scalability and upgradability.
 
 ### Standalone Script
-* Fill in the sources, destinations, and robocopy options within the `Copy-Files.ps1` script.
+* Specify the sources, destinations, and robocopy options within the `Copy-Files.ps1` script.
 * Run the script to copy the files and directories.
 
 ### Module
 * Install the `Copy-Files.psm1` module. Refer to Microsoft's documentation on installing PowerShell modules.
-* Fill in the sources, destinations, and robocopy options within the `Copy-Files-Config.ps1` script.
+* Specify the sources, destinations, and robocopy options within the `Copy-Files-Config.ps1` script.
 * Run the script to copy the files and directories.
 
 ## Copying
@@ -33,7 +33,7 @@ Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
 ### Batches
 * Make as many copies of the standalone or configuration script as desired.
 * Give each script a unique name.
-* Fill in the sources, destinations, and robocopy options within each script.
+* Specify the sources, destinations, and robocopy options within each script.
 * Run each script to copy the respective files and directories.
 
 An example of scripts representing separate batches of files and directories to be copied:
