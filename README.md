@@ -33,13 +33,13 @@ Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
 ```
 
 ### Managing Batches
-* Make as many copies of the standalone script or configuration script as desired.
+* Make as many copies of the standalone or configuration script as desired.
 * Give each script a unique name.
 * Fill in the sources, destinations, and robocopy options within each script.
 * Run each script to copy the respective files and directories.
 
 ```
-# Example of batches to be copied
+# Example names of scripts to copy batches of files and directories
 Copy-Files-Batch001.ps1
 Copy-Files-Batch002.ps1
 Copy-Files-Batch003.ps1
