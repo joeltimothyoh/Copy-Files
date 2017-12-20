@@ -8,32 +8,34 @@ Copies specified files and directories to each specified destination using Roboc
 * Copy-Files can be used as a script or module.
 
 ## Usage
-Copy-Files can either be used as a standalone script, or as a module together with a separate config script.
+Copy-Files can either be used as a standalone script, or as a module together with separate configuration scripts.
 
 #### Standalone Script
 * Fill in the sources, destinations, and robocopy options within the `Copy-Files.ps1` script.
-* Run the script to copy the files and directories.
+* Run the standalone script to copy the files and directories.
 
-```
-# Runs the standalone script
-Powershell "C:\scripts\Copy-Files\Copy-Files.ps1"
-```
 
 #### Module
-* Install the `Copy-Files.psm1` module. Refer to Microsoft's documentation on installing Powershell modules.
-* Fill in the sources, destinations, and robocopy options within the Copy-Files-Config.ps1` script.
-* Run the script to copy the files and directories.
-
-```
-# Runs the configuration script together with the module
-Powershell "C:\scripts\Copy-Files\Copy-Files-Config.ps1"
-```
+* Install the `Copy-Files.psm1` module. Refer to Microsoft's documentation on installing PowerShell modules.
+* Fill in the sources, destinations, and robocopy options within the `Copy-Files-Config.ps1` script.
+* Run the config script to copy the files and directories.
 
 ## Copying
-#### Batches
-* Make multiple copies of the standalone script or configuration script
+
+#### via File Explorer
+* Right-click the script, and choose 'Run with PowerShell'.
+
+#### via Command line
+* Run the script as a command line in a PowerShell console.
+```
+Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
+```
+
+#### Managing Batches
+* Make multiple copies of the standalone script or configuration script.
 * Give each script a unique name.
 * Fill in the sources, destinations, and robocopy options within batch of files and directories to be copied.
+* Run each script to copy the files and directories.
 
 ```
 # Example of batches to be copied
@@ -42,11 +44,20 @@ Copy-Files-Batch002.ps1
 Copy-Files-Batch003.ps1
 ```
 
-#### Scheduling
+## Scheduling
 * Set up the scripts to be run.
-* Create a task in Task Scheduler, setting a schedule for each script to be run.
+* Create a task in Task Scheduler, giving it a name and setting a schedule for the script.
+* Add an Action of `Start a program` with Program being `Powershell` and Arguments being the path to the script. 
+```
+Action: Start a program
 
-### Command Line
+Program/script:
+Powershell 
+
+Add arguments (optional): C:\scripts\Copy-Files\Copy-Files-Batch001.ps1
+```
+
+## Parameters
 ```
 Copy-Files [-Config] <Hashtable[]> [<CommonParameters>]
 
@@ -60,9 +71,11 @@ PARAMETERS
         OutBuffer, PipelineVariable, and OutVariable. For more information, see
         about_CommonParameters (https:/go.microsoft.com/fwlink/?LinkID=113216).
 ```
+
 ## Examples
+
 ##### Example 1
-Runs the script within the working directory named `Copy-Files-Batch-001.ps1` in the current instance of Powershell.
+Runs the script within the working directory named `Copy-Files-Batch-001.ps1` in the current instance of PowerShell.
 ```
 .\Copy-Files-Batch-001.ps1
 ```
@@ -86,12 +99,15 @@ To do so, open PowerShell as an Administrator. Then simply run the  command:
 To revert the policy, simply run the command:
 `Set-ExecutionPolicy Undefined -Force`
 
-
 ## Notes
 * Copy-Files serves as a wrapper around the Robocopy as a convenient and automatable file and directory copying solution.
 * Robocopy, otherwise known as Robust File Copy, is a command-line directory and/or file replication command in Windows.
 * It is recommended you have some knowledge about and experience with Robocopy before using Copy-Files.
 * For more information on Robocopy, refer to Microsoft's documentation on the command, or run `'robocopy /?'`.
 
+#### Tips
+* To quickly copy paths in File Explorer, simply *Shift + Right-Click* on a file or directory and select 'Copy as path'.
+
+
 ## Requirements
-* Windows with <a href="https://github.com/PowerShell/PowerShell#get-powershell" target="_blank" title="Powershell">Powershell v3</a>.
+* Windows with <a href="https://github.com/PowerShell/PowerShell#get-powershell" target="_blank" title="PowerShell">PowerShell v3</a>.
