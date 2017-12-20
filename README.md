@@ -52,13 +52,9 @@ Copy-Files-Backup.ps1
 * Set up the script to be run.
 * Create a task in *Task Scheduler*, giving the task a name, configuring the user account to run the script on, and defining a schedule for the script.
 * Add an *Action* with the following settings:
-
-```
-Action: Start a program
-Program/script: Powershell
-Add arguments (optional): C:\scripts\Copy-Files\Copy-Files-Project1.ps1
-```
-
+  * Action: `Start a program`
+  * Program/script: `Powershell`
+  * Add arguments (optional): `C:\path\to\script.ps1`
 * Repeat the steps for each script that is to be scheduled.
 * If unsure, refer to official documentation or guides on using *Task Scheduler*.
 

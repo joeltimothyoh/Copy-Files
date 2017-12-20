@@ -37,7 +37,7 @@
     #>
 
     [CmdletBinding()]
-	Param(
+    Param(
         [Parameter(Mandatory=$True)]
         [alias("c")]
         [hashtable[]]$Config
@@ -55,7 +55,8 @@
     if ($sources.count -eq 0) {
         Write-Output "No sources were specified. Exiting."
         return
-    } elseif ($destinations.count -eq 0) {
+    }
+    if ($destinations.count -eq 0) {
         Write-Output "No destinations were specified. Exiting."
         return
     }
@@ -73,8 +74,7 @@
     $sources_empty_cnt = 0
 
     # Store valid and invalid sources into separate arrays, and count the number of empty strings
-    foreach ($source in $sources)
-    {
+    foreach ($source in $sources) {
         try {
             $source_valid = Get-Item $source -Force -ErrorAction Stop
             $sources_valid += $source_valid

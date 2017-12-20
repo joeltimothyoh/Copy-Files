@@ -28,7 +28,7 @@ Destinations = @(
 Robocopy_options = @(
       '/E'                       # Copy subdirectories including empty ones
     # '/S'                       # Copy subdirectories excluding empty ones
-    # '/PURGE'                   # Remove files or directories in destination no longer existing in source
+    # '/PURGE'                   # Remove files or directories present in destination but not in source
     # '/MIR'                     # Mirrored copy. Equivalent to /E plus /PURGE
     # '/IF'                      # Only copy files with matching names or wildcards
     # '*.jpg'

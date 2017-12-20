@@ -59,7 +59,7 @@ Destinations = @(
 Robocopy_options = @(
       '/E'                       # Copy subdirectories including empty ones
     # '/S'                       # Copy subdirectories excluding empty ones
-    # '/PURGE'                   # Remove files or directories in destination no longer existing in source
+    # '/PURGE'                   # Remove files or directories in destination not present in source
     # '/MIR'                     # Mirrored copy. Equivalent to /E plus /PURGE
     # '/IF'                      # Only copy files with matching names or wildcards
     # '*.jpg'
@@ -92,7 +92,7 @@ Robocopy_options = @(
 function Copy-Files {
 
     [CmdletBinding()]
-	Param(
+    Param(
         [Parameter(Mandatory=$True)]
         [alias("c")]
         [hashtable[]]$Config
@@ -110,7 +110,8 @@ function Copy-Files {
     if ($sources.count -eq 0) {
         Write-Output "No sources were specified. Exiting."
         return
-    } elseif ($destinations.count -eq 0) {
+    }
+    if ($destinations.count -eq 0) {
         Write-Output "No destinations were specified. Exiting."
         return
     }
@@ -128,8 +129,7 @@ function Copy-Files {
     $sources_empty_cnt = 0
 
     # Store valid and invalid sources into separate arrays, and count the number of empty strings
-    foreach ($source in $sources)
-    {
+    foreach ($source in $sources) {
         try {
             $source_valid = Get-Item $source -Force -ErrorAction Stop
             $sources_valid += $source_valid
