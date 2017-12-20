@@ -27,6 +27,7 @@ Copy-Files can either be used as a standalone script, or as a module together wi
 
 #### via Command line
 * Run the script as a command line in a PowerShell console.
+
 ```
 Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
 ```
@@ -48,6 +49,7 @@ Copy-Files-Batch003.ps1
 * Set up the scripts to be run.
 * Create a task in Task Scheduler, giving it a name and setting a schedule for the script.
 * Add an Action of `Start a program` with Program being `Powershell` and Arguments being the path to the script.
+
 ```
 Action: Start a program
 
@@ -58,6 +60,7 @@ Add arguments (optional): C:\scripts\Copy-Files\Copy-Files-Batch001.ps1
 ```
 
 ## Parameters
+
 ```
 Copy-Files [-Config] <Hashtable[]> [<CommonParameters>]
 
@@ -76,16 +79,19 @@ PARAMETERS
 
 ##### Example 1
 Runs the script within the working directory named `Copy-Files-Batch-001.ps1` in the current instance of PowerShell.
+
 ```
 .\Copy-Files-Batch-001.ps1
 ```
 ##### Example 2
 Runs script named `Copy-Files-Batch-001.ps1` in a separate instance of Powershell.
+
 ```
 Powershell "C:\scripts\Copy-Files\Copy-Files-Batch-001.ps1"
 ```
 ##### Example 3
 Runs the Copy-Files module with the configuration hashtable named `$batch001`.
+
 ```
 Copy-Files -Config $batch001
 ```
@@ -93,11 +99,14 @@ Copy-Files -Config $batch001
 ## Security
 Unverified scripts are disallowed to be run by default. To run Copy-Files, you will need to allow the execution of unverified scripts.
 
-To do so, open PowerShell as an Administrator. Then simply run the  command:
+To do so, open PowerShell as an Administrator. Then simply run the command:
+
 ```
 Set-ExecutionPolicy Unrestricted -Force
 ```
+
 To revert the policy, simply run the command:
+
 ```
 Set-ExecutionPolicy Undefined -Force
 ```
