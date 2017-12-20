@@ -5,20 +5,18 @@ Copies specified files and directories to each specified destination using Roboc
 * Specified sources, destinations, and robocopy options will be used to make copy operations.
 * Both files and directories can be used as sources.
 * Sources and destinations paths can either be local (e.g. `'C:\Folder'`), network (e.g. `'\\ServerName\Folder'`), or relative from the working directory (e.g. `'Folder\Subfolder'`).
-* Copy-Files can be used as a script or module.
 
 ## Usage
 Copy-Files can either be used as a standalone script, or as a module together with separate configuration scripts. The Standalone script allows for greater portability and isolation, while the module allows for greater accessibility, scalability and upgradability.
 
 ### Standalone Script
 * Fill in the sources, destinations, and robocopy options within the `Copy-Files.ps1` script.
-* Run the standalone script to copy the files and directories.
-
+* Run the script to copy the files and directories.
 
 ### Module
 * Install the `Copy-Files.psm1` module. Refer to Microsoft's documentation on installing PowerShell modules.
 * Fill in the sources, destinations, and robocopy options within the `Copy-Files-Config.ps1` script.
-* Run the config script to copy the files and directories.
+* Run the script to copy the files and directories.
 
 ## Copying
 
@@ -26,23 +24,26 @@ Copy-Files can either be used as a standalone script, or as a module together wi
 * Right-click the script, and choose 'Run with PowerShell'.
 
 ### via Command line
-* Run the script as a command line in a PowerShell console.
+* Run the script via a command line.
 
 ```
 Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
 ```
 
-### Managing Batches
+### Batches
 * Make as many copies of the standalone or configuration script as desired.
 * Give each script a unique name.
 * Fill in the sources, destinations, and robocopy options within each script.
 * Run each script to copy the respective files and directories.
 
+An example of scripts representing separate batches of files and directories to be copied:
+
 ```
-# Example names of scripts to copy batches of files and directories
-Copy-Files-Batch001.ps1
-Copy-Files-Batch002.ps1
-Copy-Files-Batch003.ps1
+Copy-Files-Project1.ps1
+Copy-Files-Project2.ps1
+Copy-Files-Data01.ps1
+Copy-Files-Data02.ps1
+Copy-Files-Backup.ps1
 ```
 
 ## Scheduling
@@ -78,10 +79,10 @@ PARAMETERS
 ## Examples
 
 #### Example 1
-Runs the script within the working directory named `Copy-Files-Batch-001.ps1` in the current instance of PowerShell.
+Runs the script within the working directory named `Copy-Files-Project1.ps1` in the current instance of PowerShell.
 
 ```
-.\Copy-Files-Batch-001.ps1
+.\Copy-Files-Project1.ps1
 ```
 
 #### Example 2
@@ -99,7 +100,7 @@ Copy-Files -Config $batch001
 ```
 
 ## Security
-Unverified scripts are restricted from being run by default. To run Copy-Files, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then simply run the command:
+Unverified scripts are restricted from running on Windows by default. To run Copy-Files, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then run the command:
 
 ```
 Set-ExecutionPolicy Unrestricted -Force
@@ -112,13 +113,13 @@ Set-ExecutionPolicy Undefined -Force
 ```
 
 ## Notes
-* Copy-Files serves as a wrapper around the Robocopy as a convenient and automatable file and directory copying solution.
+* Copy-Files serves as a wrapper around Robocopy as a convenient and automatable file and directory copying solution.
 * Robocopy, otherwise known as Robust File Copy, is a command-line directory and/or file replication command in Windows.
 * It is recommended you have some knowledge about and experience with Robocopy before using Copy-Files.
 * For more information on Robocopy, refer to Microsoft's documentation on the command, or run `'robocopy /?'`.
 
 ### Tips
-* To quickly copy paths in File Explorer, simply *Shift + Right-Click* on a file or directory and select 'Copy as path'.
+* To quickly get the full path of a file or directory in File Explorer, simply *Shift + Right-Click* on the item and select 'Copy as path'.
 
 ## Requirements
 * Windows with <a href="https://github.com/PowerShell/PowerShell#get-powershell" target="_blank" title="PowerShell">PowerShell v3</a> or higher.

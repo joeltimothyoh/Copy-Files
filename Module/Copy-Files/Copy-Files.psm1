@@ -15,19 +15,19 @@
     The configuration hashtable containing sources, destinations, and robocopy options to be used by Copy-Files.
 
     .EXAMPLE
-    .\Copy-Files-Batch-001.ps1
-    Runs script within the working directory named Copy-Files-Batch-001.ps1 in the current instance of Powershell.
+    .\Copy-Files-Project1.ps1
+    Runs script within the working directory named Copy-Files-Project1.ps1 in the current instance of Powershell.
 
     .EXAMPLE
-    Powershell "C:\scripts\Copy-Files\Copy-Files-Batch-001.ps1"
-    Runs script named Copy-Files-Batch-001.ps1 in a separate instance of Powershell.
+    Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
+    Runs script named Copy-Files-Batch001.ps1 in a separate instance of Powershell.
 
     .EXAMPLE
     Copy-Files -Config $batch001
     Runs the Copy-Files module with the configuration hashtable named $batch001.
 
     .NOTES
-    Copy-Files serves as a wrapper around the Robocopy as a convenient and automatable file and directory copying solution.
+    Copy-Files serves as a wrapper around Robocopy as a convenient and automatable file and directory copying solution.
     Robocopy, otherwise known as Robust File Copy, is a command-line directory and/or file replication command in Windows.
     It is recommended you have some knowledge about and experience with Robocopy before using Copy-Files.
     For more information on Robocopy, refer to Microsoft's documentation on the command, or run 'robocopy /?'.
