@@ -1,95 +1,40 @@
-﻿<#
-.SYNOPSIS
-Copies specified files and directories to each specified destination using Robocopy.
+﻿function Copy-Files {
+    <#
+    .SYNOPSIS
+    Copies specified files and directories to each specified destination using Robocopy.
 
-.DESCRIPTION
-Specified sources, destinations, and robocopy options will be used to make copy operations.
-Both files and directories can be used as sources.
-Sources and destinations paths can either be local (e.g. 'C:\Folder'), network (e.g. '\\ServerName\Folder'), or relative from the working directory (e.g. 'Folder\Subfolder').
+    .DESCRIPTION
+    Specified sources, destinations, and robocopy options will be used to make copy operations.
+    Both files and directories can be used as sources.
+    Sources and destinations paths can either be local (e.g. 'C:\Folder'), network (e.g. '\\ServerName\Folder'), or relative from the working directory (e.g. 'Folder\Subfolder').
 
-Fill in the sources, destinations, and robocopy options within a Copy-Files standalone or configuration script. Then manually run the script, or set it to run on a schedule.
-To copy in batches, repeat the same steps for each batch of files and directories to be copied, giving each script a unique name of your choice.
+    Fill in the sources, destinations, and robocopy options within a Copy-Files standalone or configuration script. Then manually run the script, or set it to run on a schedule.
+    To copy in batches, repeat the same steps for each batch of files and directories to be copied, giving each script a unique name of your choice.
 
-.PARAMETER Config
-The configuration hashtable containing sources, destinations, and robocopy options to be used by Copy-Files.
+    .PARAMETER Config
+    The configuration hashtable containing sources, destinations, and robocopy options to be used by Copy-Files.
 
-.EXAMPLE
-.\Copy-Files-Batch-001.ps1
-Runs script in the working directory named Copy-Files-Batch-001.ps1 in the current instance of Powershell.
+    .EXAMPLE
+    .\Copy-Files-Batch-001.ps1
+    Runs script in the working directory named Copy-Files-Batch-001.ps1 in the current instance of Powershell.
 
-.EXAMPLE
-Powershell "C:\scripts\Copy-Files\Copy-Files-Batch-001.ps1"
-Runs script named Copy-Files-Batch-001.ps1 in a separate instance of Powershell.
+    .EXAMPLE
+    Powershell "C:\scripts\Copy-Files\Copy-Files-Batch-001.ps1"
+    Runs script named Copy-Files-Batch-001.ps1 in a separate instance of Powershell.
 
-.EXAMPLE
-Copy-Files -Config $batch001
-Runs the Copy-Files module with the configuration hashtable named $batch001.
+    .EXAMPLE
+    Copy-Files -Config $batch001
+    Runs the Copy-Files module with the configuration hashtable named $batch001.
 
-.NOTES
-Copy-Files serves as a wrapper around the Robocopy as a convenient and automatable file and directory copying solution.
-Robocopy, otherwise known as Robust File Copy, is a command-line directory and/or file replication command in Windows.
-It is recommended you have some knowledge about and experience with Robocopy before using Copy-Files.
-For more information on Robocopy, refer to Microsoft's documentation on the command, or run 'robocopy /?'.
+    .NOTES
+    Copy-Files serves as a wrapper around the Robocopy as a convenient and automatable file and directory copying solution.
+    Robocopy, otherwise known as Robust File Copy, is a command-line directory and/or file replication command in Windows.
+    It is recommended you have some knowledge about and experience with Robocopy before using Copy-Files.
+    For more information on Robocopy, refer to Microsoft's documentation on the command, or run 'robocopy /?'.
 
-.LINK
-https://github.com/joeltimothyoh/Copy-Files
-#>
-
-
-$Config = @{
-########################   Files and directories to copy   ########################
-
-Sources = @(
-    # 'C:\Users\username\Documents\Project 1\example folder'
-    # 'C:\Users\username\Documents\Project 1\example.docx'
-    # 'D:\Git\Project 1\repository2'
-)
-
-###########################   Destination directories   ###########################
-
-Destinations = @(
-    # 'E:\Backup\Projects\Project 1'
-    # '\\SERVER1\Projects\Project 1'
-    # '\\SERVER2\Shared\Projects\Project 1'
-)
-
-##############################   Robocopy options   ###############################
-
-# Refer to Robocopy's documentation for more options
-Robocopy_options = @(
-      '/E'                       # Copy subdirectories including empty ones
-    # '/S'                       # Copy subdirectories excluding empty ones
-    # '/PURGE'                   # Remove files or directories in destination no longer existing in source
-    # '/MIR'                     # Mirrored copy. Equivalent to /E plus /PURGE
-    # '/IF'                      # Only copy files with matching names or wildcards
-    # '*.jpg'
-    # '*.docx'
-    # '/XF'                      # Exclude files with matching names or wildcards from all operations
-    # 'readme.txt'
-    # '*.log'
-    # '/XD'                      # Exclude directories with matching names or wildcards from all operations
-    # 'misc'
-    # '*.git'
-    # '/SL'                      # Copy symbolic links instead of targets
-    # '/XL'                      # Exclude copying of files only present in source
-    # '/XX'                      # Exclude removal of files only present in destination. A safety switch when used with /PURGE or /MIR
-    # '/XA:SH'                   # Exclude copying of system and hidden files
-    # '/SEC'                     # Include security info
-    # '/COPY:DAT'                # Include specified file info. Default is /COPY:DAT (D=Data, A=Attributes, T=Timestamps)
-    # '/COPYALL'                 # Include all file info. Equivalent to /COPY:DATSOU (S=Security=NTFS ACLs, O=Owner info, U=Auditing info)
-    # '/L'                       # List-only mode, no copying, deleting, or timestamping
-    # '/V'                       # Show verbose output
-    # '/NJH'                     # No job header
-    # '/NJS'                     # No job summary
-    # '/LOG+:C:\pathto\log.txt'  # Append output to log file. Directory of log file must already exist
-    # '/TEE'                     # Output both to the console window and log file
-)
-
-###################################################################################
-
-}
-
-function Copy-Files {
+    .LINK
+    https://github.com/joeltimothyoh/Copy-Files
+    #>
 
     [CmdletBinding()]
 	Param(
@@ -227,5 +172,5 @@ function Copy-Files {
 
 }
 
-# Call main function with the following configuration hashtable
-Copy-Files -Config $Config
+# Export the members of the module
+Export-ModuleMember -Function Copy-Files
