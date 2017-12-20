@@ -11,11 +11,13 @@ Copy-Files can either be used as a standalone script, or as a module together wi
 
 ### Standalone Script
 * Specify the sources, destinations, and robocopy options within the `Copy-Files.ps1` script.
+* Give the script a unique name.
 * Run the script to copy the files and directories.
 
 ### Module
 * Install the `Copy-Files.psm1` module. Refer to Microsoft's documentation on installing PowerShell modules.
 * Specify the sources, destinations, and robocopy options within the `Copy-Files-Config.ps1` script.
+* Give the script a unique name.
 * Run the script to copy the files and directories.
 
 ## Copying
@@ -27,7 +29,7 @@ Copy-Files can either be used as a standalone script, or as a module together wi
 * Run the script via a command line.
 
 ```
-Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
+Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
 ```
 
 ### Batches
@@ -54,7 +56,7 @@ Copy-Files-Backup.ps1
 ```
 Action: Start a program
 Program/script: Powershell
-Add arguments (optional): C:\scripts\Copy-Files\Copy-Files-Batch001.ps1
+Add arguments (optional): C:\scripts\Copy-Files\Copy-Files-Project1.ps1
 ```
 
 * Repeat the steps for each script that is to be scheduled.
@@ -86,10 +88,10 @@ Runs the script within the working directory named `Copy-Files-Project1.ps1` in 
 ```
 
 #### Example 2
-Runs script named `Copy-Files-Batch-001.ps1` in a separate instance of Powershell.
+Runs script named `Copy-Files-Batch001.ps1` in a separate instance of Powershell.
 
 ```
-Powershell "C:\scripts\Copy-Files\Copy-Files-Batch-001.ps1"
+Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
 ```
 
 #### Example 3
