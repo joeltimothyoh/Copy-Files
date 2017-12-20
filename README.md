@@ -47,12 +47,12 @@ Copy-Files-Batch003.ps1
 ## Scheduling
 * Set up the scripts to be run.
 * Create a task in Task Scheduler, giving it a name and setting a schedule for the script.
-* Add an Action of `Start a program` with Program being `Powershell` and Arguments being the path to the script. 
+* Add an Action of `Start a program` with Program being `Powershell` and Arguments being the path to the script.
 ```
 Action: Start a program
 
 Program/script:
-Powershell 
+Powershell
 
 Add arguments (optional): C:\scripts\Copy-Files\Copy-Files-Batch001.ps1
 ```
@@ -94,10 +94,13 @@ Copy-Files -Config $batch001
 Unverified scripts are disallowed to be run by default. To run Copy-Files, you will need to allow the execution of unverified scripts.
 
 To do so, open PowerShell as an Administrator. Then simply run the  command:
-`Set-ExecutionPolicy Unrestricted -Force`
-
+```
+Set-ExecutionPolicy Unrestricted -Force
+```
 To revert the policy, simply run the command:
-`Set-ExecutionPolicy Undefined -Force`
+```
+Set-ExecutionPolicy Undefined -Force
+```
 
 ## Notes
 * Copy-Files serves as a wrapper around the Robocopy as a convenient and automatable file and directory copying solution.
@@ -107,7 +110,6 @@ To revert the policy, simply run the command:
 
 #### Tips
 * To quickly copy paths in File Explorer, simply *Shift + Right-Click* on a file or directory and select 'Copy as path'.
-
 
 ## Requirements
 * Windows with <a href="https://github.com/PowerShell/PowerShell#get-powershell" target="_blank" title="PowerShell">PowerShell v3</a>.
