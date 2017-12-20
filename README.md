@@ -8,7 +8,7 @@ Copies specified files and directories to each specified destination using Roboc
 * Copy-Files can be used as a script or module.
 
 ## Usage
-Copy-Files can either be used as a standalone script, or as a module together with separate configuration scripts.
+Copy-Files can either be used as a standalone script, or as a module together with separate configuration scripts. The Standalone script allows for greater portability and isolation, while the module allows for greater accessibility, scalability and upgradability.
 
 ### Standalone Script
 * Fill in the sources, destinations, and robocopy options within the `Copy-Files.ps1` script.
@@ -33,10 +33,10 @@ Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
 ```
 
 ### Managing Batches
-* Make multiple copies of the standalone script or configuration script.
+* Make as many copies of the standalone script or configuration script as desired.
 * Give each script a unique name.
-* Fill in the sources, destinations, and robocopy options within batch of files and directories to be copied.
-* Run each script to copy the files and directories.
+* Fill in the sources, destinations, and robocopy options within each script.
+* Run each script to copy the respective files and directories.
 
 ```
 # Example of batches to be copied
@@ -46,18 +46,18 @@ Copy-Files-Batch003.ps1
 ```
 
 ## Scheduling
-* Set up the scripts to be run.
-* Create a task in Task Scheduler, giving it a name and setting a schedule for the script.
-* Add an Action of `Start a program` with Program being `Powershell` and Arguments being the path to the script.
+* Set up the script to be run.
+* Create a task in *Task Scheduler*, giving the task a name, configuring the user account to run the script on, and defining a schedule for the script.
+* Add an *Action* with the following settings:
 
 ```
 Action: Start a program
-
-Program/script:
-Powershell
-
+Program/script: Powershell
 Add arguments (optional): C:\scripts\Copy-Files\Copy-Files-Batch001.ps1
 ```
+
+* Repeat the steps for each script that is to be scheduled.
+* If unsure, refer to official documentation or guides on using *Task Scheduler*.
 
 ## Parameters
 
@@ -83,12 +83,14 @@ Runs the script within the working directory named `Copy-Files-Batch-001.ps1` in
 ```
 .\Copy-Files-Batch-001.ps1
 ```
+
 #### Example 2
 Runs script named `Copy-Files-Batch-001.ps1` in a separate instance of Powershell.
 
 ```
 Powershell "C:\scripts\Copy-Files\Copy-Files-Batch-001.ps1"
 ```
+
 #### Example 3
 Runs the Copy-Files module with the configuration hashtable named `$batch001`.
 
@@ -97,9 +99,7 @@ Copy-Files -Config $batch001
 ```
 
 ## Security
-Unverified scripts are disallowed to be run by default. To run Copy-Files, you will need to allow the execution of unverified scripts.
-
-To do so, open PowerShell as an Administrator. Then simply run the command:
+Unverified scripts are restricted from being run by default. To run Copy-Files, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then simply run the command:
 
 ```
 Set-ExecutionPolicy Unrestricted -Force
