@@ -62,17 +62,17 @@ PARAMETERS
 ```
 ## Examples
 ##### Example 1
-Runs the Copy-Files script in the working directory named `Copy-Files-Batch-001.ps1` in the current instance of Powershell.
+Runs the script within the working directory named `Copy-Files-Batch-001.ps1` in the current instance of Powershell.
 ```
 .\Copy-Files-Batch-001.ps1
 ```
 ##### Example 2
-Runs script named Copy-Files-Batch-001.ps1 in a separate instance of Powershell.
+Runs script named `Copy-Files-Batch-001.ps1` in a separate instance of Powershell.
 ```
 Powershell "C:\scripts\Copy-Files\Copy-Files-Batch-001.ps1"
 ```
 ##### Example 3
-Runs the Copy-Files module with the configuration hashtable named $batch001.
+Runs the Copy-Files module with the configuration hashtable named `$batch001`.
 ```
 Copy-Files -Config $batch001
 ```
@@ -91,7 +91,7 @@ To revert the policy, simply run the command:
 * Copy-Files serves as a wrapper around the Robocopy as a convenient and automatable file and directory copying solution.
 * Robocopy, otherwise known as Robust File Copy, is a command-line directory and/or file replication command in Windows.
 * It is recommended you have some knowledge about and experience with Robocopy before using Copy-Files.
-* For more information on Robocopy, refer to Microsoft's documentation on the command, or run 'robocopy /?'.
+* For more information on Robocopy, refer to Microsoft's documentation on the command, or run `'robocopy /?'`.
 
-## Compatibility
-Windows with <a href="https://github.com/PowerShell/PowerShell#get-powershell" target="_blank" title="Powershell">Powershell v3</a>.
+## Requirements
+* Windows with <a href="https://github.com/PowerShell/PowerShell#get-powershell" target="_blank" title="Powershell">Powershell v3</a>.

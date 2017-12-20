@@ -15,7 +15,7 @@ The configuration hashtable containing sources, destinations, and robocopy optio
 
 .EXAMPLE
 .\Copy-Files-Batch-001.ps1
-Runs script in the working directory named Copy-Files-Batch-001.ps1 in the current instance of Powershell.
+Runs script within the working directory named Copy-Files-Batch-001.ps1 in the current instance of Powershell.
 
 .EXAMPLE
 Powershell "C:\scripts\Copy-Files\Copy-Files-Batch-001.ps1"
