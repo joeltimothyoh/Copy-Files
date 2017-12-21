@@ -18,12 +18,12 @@ The configuration hashtable containing sources, destinations, and robocopy optio
 Runs script within the working directory named Copy-Files-Project1.ps1 in the current instance of Powershell.
 
 .EXAMPLE
-Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
-Runs script named Copy-Files-Batch001.ps1 in a separate instance of Powershell.
+Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
+Runs script named Copy-Files-Project1.ps1 in a separate instance of Powershell.
 
 .EXAMPLE
-Copy-Files -Config $batch001
-Runs the Copy-Files module with the configuration hashtable named $batch001.
+Copy-Files -Config $myconfig
+Runs the Copy-Files module with the configuration hashtable named $myconfig.
 
 .NOTES
 Copy-Files serves as a wrapper around Robocopy as a convenient and automatable file and directory copying solution.

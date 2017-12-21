@@ -43,8 +43,8 @@ An example of scripts representing separate batches of files and directories to 
 ```
 Copy-Files-Project1.ps1
 Copy-Files-Project2.ps1
-Copy-Files-Data01.ps1
-Copy-Files-Data02.ps1
+Copy-Files-Data1.ps1
+Copy-Files-Data2.ps1
 Copy-Files-Backup.ps1
 ```
 
@@ -84,17 +84,17 @@ Runs the script within the working directory named `Copy-Files-Project1.ps1` in 
 ```
 
 #### Example 2
-Runs script named `Copy-Files-Batch001.ps1` in a separate instance of Powershell.
+Runs script named `Copy-Files-Project1.ps1` in a separate instance of Powershell.
 
 ```
-Powershell "C:\scripts\Copy-Files\Copy-Files-Batch001.ps1"
+Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
 ```
 
 #### Example 3
-Runs the Copy-Files module with the configuration hashtable named `$batch001`.
+Runs the Copy-Files module with the configuration hashtable named `$myconfig`.
 
 ```
-Copy-Files -Config $batch001
+Copy-Files -Config $myconfig
 ```
 
 ## Security
