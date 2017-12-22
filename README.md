@@ -17,23 +17,24 @@ Copy-Files can either be used as a standalone script, or as a module together wi
 ### Module with config scripts
 * Install the `Copy-Files.psm1` module. Refer to Microsoft's documentation on installing PowerShell modules.
 * Specify the sources, destinations, and robocopy options within the `Copy-Files-Config.ps1` script.
-* Give the script a unique name.
+* Give the configuration script a unique name.
 * Run the script to copy the files and directories.
 
 ## Batches
-Multiple scripts can be used to organize the copying of different batches of files and directories.
-* Make as many copies of the standalone or configuration script as desired.
+Multiple standalone or configuration scripts can be used to organize copying, with each script representing a batch of files and directories.
+* Make as many copies of the standalone or configuration scripts as required.
 * Give each script a unique name.
 * Specify the sources, destinations, and robocopy options within each script.
 * Run each script to copy their respective files and directories.
 
-An example of scripts representing separate batches of files and directories to be copied:
+Example use of several scripts, each representing a separate batch of files and directories:
 
 ```
 Copy-Files-Project1.ps1
 Copy-Files-Project2.ps1
 Copy-Files-Data1.ps1
 Copy-Files-Data2.ps1
+Copy-Files-Update.ps1
 Copy-Files-Backup.ps1
 ```
 
@@ -46,19 +47,19 @@ Copy-Files-Backup.ps1
 * Run the script via a command line.
 
 ```
-Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
+Powershell "C:\path\to\script.ps1"
 ```
 
 ### Scheduling
 Copy-Files scripts can be scheduled to automatically make copies of files and directories.
 * Set up the script to be run.
-* Add an *Action* for the task with the following settings:
-  * Action: `Start a program`
-  * Program/script: `Powershell`
-  * Add arguments (optional): `C:\path\to\script.ps1`
+* In *Task Scheduler*, create a task with an *Action* with the following settings:
+  * *Action*: `Start a program`
+  * *Program/script*: `Powershell`
+  * *Add arguments (optional)*: `C:\path\to\script.ps1`
 * Repeat the steps for each script that is to be scheduled.
 
-Refer to Microsoft's documentation or guides on using *Task Scheduler*.
+Refer to Microsoft's documentation or guides for further help on using *Task Scheduler*.
 
 ## Parameters
 
