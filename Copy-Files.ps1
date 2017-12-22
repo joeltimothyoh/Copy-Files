@@ -15,11 +15,11 @@ The configuration hashtable containing sources, destinations, and robocopy optio
 
 .EXAMPLE
 .\Copy-Files-Project1.ps1
-Runs script within the working directory named Copy-Files-Project1.ps1 in the current instance of Powershell.
+Runs the script Copy-Files-Project1.ps1 within the working directory in the current instance of Powershell.
 
 .EXAMPLE
 Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
-Runs script named Copy-Files-Project1.ps1 in a separate instance of Powershell.
+Runs the script Copy-Files-Project1.ps1 within the specified path in an instance of Powershell.
 
 .EXAMPLE
 Copy-Files -Config $myconfig

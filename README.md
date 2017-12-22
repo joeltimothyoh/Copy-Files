@@ -14,7 +14,7 @@ Copy-Files can either be used as a standalone script, or as a module together wi
 * Give the script a unique name.
 * Run the script to copy the files and directories.
 
-### Module
+### Module with config scripts
 * Install the `Copy-Files.psm1` module. Refer to Microsoft's documentation on installing PowerShell modules.
 * Specify the sources, destinations, and robocopy options within the `Copy-Files-Config.ps1` script.
 * Give the script a unique name.
@@ -33,10 +33,11 @@ Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
 ```
 
 ### Batches
+Multiple scripts can be used to organize the copying of different batches of files and directories.
 * Make as many copies of the standalone or configuration script as desired.
 * Give each script a unique name.
 * Specify the sources, destinations, and robocopy options within each script.
-* Run each script to copy the respective files and directories.
+* Run each script to copy their respective files and directories.
 
 An example of scripts representing separate batches of files and directories to be copied:
 
@@ -49,14 +50,15 @@ Copy-Files-Backup.ps1
 ```
 
 ## Scheduling
+Copy-Files scripts can be scheduled to automatically make copies of files and directories.
 * Set up the script to be run.
-* Create a task in *Task Scheduler*, giving the task a name, configuring the user account to run the script on, and defining a schedule for the script.
-* Add an *Action* with the following settings:
+* Add an *Action* for the task with the following settings:
   * Action: `Start a program`
   * Program/script: `Powershell`
   * Add arguments (optional): `C:\path\to\script.ps1`
 * Repeat the steps for each script that is to be scheduled.
-* If unsure, refer to official documentation or guides on using *Task Scheduler*.
+
+Refer to Microsoft's documentation or guides on using *Task Scheduler*.
 
 ## Parameters
 
@@ -74,37 +76,37 @@ PARAMETERS
         about_CommonParameters (https:/go.microsoft.com/fwlink/?LinkID=113216).
 ```
 
-## Examples
+### Examples
 
 #### Example 1
-Runs the script within the working directory named `Copy-Files-Project1.ps1` in the current instance of PowerShell.
+Runs the script `Copy-Files-Project1.ps1` within the working directory in the current instance of Powershell.
 
 ```
 .\Copy-Files-Project1.ps1
 ```
 
 #### Example 2
-Runs script named `Copy-Files-Project1.ps1` in a separate instance of Powershell.
+Runs the script `Copy-Files-Project1.ps1` within the specified path in an instance of Powershell.
 
 ```
 Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
 ```
 
 #### Example 3
-Runs the Copy-Files module with the configuration hashtable named `$myconfig`.
+Runs the `Copy-Files` module with the configuration hashtable named `$myconfig`.
 
 ```
 Copy-Files -Config $myconfig
 ```
 
 ## Security
-Unverified scripts are restricted from running on Windows by default. To run Copy-Files, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then run the command:
+Unverified scripts are restricted from running on Windows by default. In order to use Copy-Files, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then run the command:
 
 ```
 Set-ExecutionPolicy Unrestricted -Force
 ```
 
-To revert the policy, simply run the command:
+If you wish to revert the policy, run the command:
 
 ```
 Set-ExecutionPolicy Undefined -Force
@@ -118,6 +120,7 @@ Set-ExecutionPolicy Undefined -Force
 
 ### Tips
 * To quickly get the full path of a file or directory in File Explorer, simply *Shift + Right-Click* on the item and select 'Copy as path'.
+* To quickly open a PowerShell instance from File Explorer, simply *Shift + Right-Click* on a directory or anywhere within it and select 'Open PowerShell window here'.
 
 ## Requirements
 * Windows with <a href="https://github.com/PowerShell/PowerShell#get-powershell" target="_blank" title="PowerShell">PowerShell v3</a> or higher.
