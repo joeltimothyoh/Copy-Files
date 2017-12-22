@@ -20,19 +20,7 @@ Copy-Files can either be used as a standalone script, or as a module together wi
 * Give the script a unique name.
 * Run the script to copy the files and directories.
 
-## Copying
-
-### via File Explorer
-* Right-click the script, and choose 'Run with PowerShell'.
-
-### via Command line
-* Run the script via a command line.
-
-```
-Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
-```
-
-### Batches
+## Batches
 Multiple scripts can be used to organize the copying of different batches of files and directories.
 * Make as many copies of the standalone or configuration script as desired.
 * Give each script a unique name.
@@ -49,7 +37,19 @@ Copy-Files-Data2.ps1
 Copy-Files-Backup.ps1
 ```
 
-## Scheduling
+## Copying
+
+### via File Explorer
+* Right-click the script, and choose 'Run with PowerShell'.
+
+### via Command line
+* Run the script via a command line.
+
+```
+Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
+```
+
+### Scheduling
 Copy-Files scripts can be scheduled to automatically make copies of files and directories.
 * Set up the script to be run.
 * Add an *Action* for the task with the following settings:
