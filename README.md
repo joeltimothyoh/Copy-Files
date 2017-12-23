@@ -22,7 +22,7 @@ Copy-Files can either be used as a standalone script, or as a module together wi
 
 ## Batches
 Multiple standalone or configuration scripts can be used to organize copying, with each script representing a batch of files and directories.
-* Make as many copies of the standalone or configuration scripts as required.
+* Make as many copies of the standalone or configuration script as required.
 * Give each script a unique name.
 * Specify the sources, destinations, and robocopy options within each script.
 * Run each script to copy their respective files and directories.
@@ -53,7 +53,7 @@ Powershell "C:\path\to\script.ps1"
 ### Scheduling
 Copy-Files scripts can be scheduled to automatically make copies of files and directories.
 * Set up the script to be run.
-* In *Task Scheduler*, create a task with an *Action* with the following settings:
+* In *Task Scheduler*, create a task with the following *Action*:
   * *Action*: `Start a program`
   * *Program/script*: `Powershell`
   * *Add arguments (optional)*: `C:\path\to\script.ps1`
