@@ -124,4 +124,4 @@ Set-ExecutionPolicy Undefined -Force
 * To quickly open a PowerShell instance from File Explorer, simply *Shift + Right-Click* on a directory or anywhere within it and select 'Open PowerShell window here'.
 
 ## Requirements
-* Windows with <a href="https://github.com/PowerShell/PowerShell#get-powershell" target="_blank" title="PowerShell">PowerShell v3</a> or higher.
+* Windows with <a href="https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell?view=powershell-5.1" target="_blank" title="PowerShell">PowerShell v3 or higher</a>.
