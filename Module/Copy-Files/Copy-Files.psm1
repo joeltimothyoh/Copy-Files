@@ -150,10 +150,10 @@
             Write-Host "Type: $($source_valid.Attributes)" -ForegroundColor Yellow
 
             # Define parameters depending on whether source is a file or directory
-            if ($source_valid.Attributes -match 'Archive') {        # match is used as .Attributes property returns as a string of attributes
+            if (!$source_valid.PSIsContainer) {
                 $prm = $source_valid.DirectoryName, $destination_valid, $source_valid.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S') } )      # /MIR, /E, /S will be ignored for file sources
             }
-            elseif ($source_valid.Attributes -match 'Directory') {
+            elseif ($source_valid.PSIsContainer) {
                 $prm = $source_valid.FullName, "$($destination_valid)\$($source_valid.Name)" + $robocopy_options
             }
 
