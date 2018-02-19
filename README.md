@@ -67,7 +67,7 @@ Copy-Files scripts can be scheduled to automatically make copies of files and di
 * In *Task Scheduler*, create a task with the following *Action*:
   * *Action*: `Start a program`
   * *Program/script*: `Powershell`
-  * *Add arguments (optional)*: `C:\path\to\script.ps1`
+  * *Add arguments (optional)*: `"C:\path\to\script.ps1"`
 * Repeat the steps for each script that is to be scheduled.
 
 Refer to Microsoft's documentation or guides for further help on using *Task Scheduler*.
