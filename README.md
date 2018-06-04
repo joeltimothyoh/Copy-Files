@@ -36,7 +36,7 @@ Multiple standalone or configuration scripts can be used to organize copying, wi
 
 Example use of several scripts, each representing a separate batch of files and directories:
 
-```
+```powershell
 Copy-Files-Project1.ps1
 Copy-Files-Project2.ps1
 Copy-Files-Data1.ps1
@@ -55,7 +55,7 @@ Copy-Files-Backup.ps1
 
 * Run the script via a command line.
 
-```
+```powershell
 Powershell "C:\path\to\script.ps1"
 ```
 
@@ -74,7 +74,7 @@ Refer to Microsoft's documentation or guides for further help on using *Task Sch
 
 ## Parameters
 
-```
+```powershell
 Copy-Files [-Config] <Hashtable[]> [<CommonParameters>]
 
 PARAMETERS
@@ -94,7 +94,7 @@ PARAMETERS
 
 Runs the script `Copy-Files-Project1.ps1` within the working directory in the current instance of Powershell.
 
-```
+```powershell
 .\Copy-Files-Project1.ps1
 ```
 
@@ -102,7 +102,7 @@ Runs the script `Copy-Files-Project1.ps1` within the working directory in the cu
 
 Runs the script `Copy-Files-Project1.ps1` within the specified path in an instance of Powershell.
 
-```
+```powershell
 Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
 ```
 
@@ -110,21 +110,21 @@ Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
 
 Runs the `Copy-Files` module with the configuration hashtable named `$myconfig`.
 
-```
+```powershell
 Copy-Files -Config $myconfig
 ```
 
 ## Security
 
-Unverified scripts are restricted from running on Windows by default. In order to use Copy-Files, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then run the command:
+Unverified scripts are restricted from running on Windows by default. In order to use `Copy-Files`, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then run the command:
 
-```
+```powershell
 Set-ExecutionPolicy Unrestricted -Force
 ```
 
 If you wish to revert the policy, run the command:
 
-```
+```powershell
 Set-ExecutionPolicy Undefined -Force
 ```
 
