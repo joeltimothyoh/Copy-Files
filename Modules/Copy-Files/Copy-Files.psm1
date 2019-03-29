@@ -40,7 +40,7 @@
     Param(
         [Parameter(Mandatory=$True)]
         [alias("c")]
-        [hashtable[]]$Config
+        [hashtable]$Config
     )
 
     # Retrieve the respective arrays from the config hashtable

@@ -75,17 +75,17 @@ Refer to Microsoft's documentation or guides for further help on using *Task Sch
 ## Parameters
 
 ```powershell
-Copy-Files [-Config] <Hashtable[]> [<CommonParameters>]
+Copy-Files [-Config] <Hashtable> [<CommonParameters>]
 
 PARAMETERS
-    -Config <Hashtable[]>
+    -Config <Hashtable>
         The configuration hashtable containing sources, destinations, and robocopy options to be used by Copy-Files.
 
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
         OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters (https:/go.microsoft.com/fwlink/?LinkID=113216).
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216).
 ```
 
 ### Examples
