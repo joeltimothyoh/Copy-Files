@@ -19,12 +19,8 @@
     Runs the script Copy-Files-Project1.ps1 within the working directory in the current instance of Powershell.
 
     .EXAMPLE
-    Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
-    Runs the script Copy-Files-Project1.ps1 within the specified path in an instance of Powershell.
-
-    .EXAMPLE
-    Copy-Files -Config $myconfig
-    Runs the Copy-Files module with the configuration hashtable named $myconfig.
+    Copy-Files -Sources 'C:\Files\File.txt','C:\Folder' -Destinations 'D:\BackupFolder' -RobocopyOptions '/E','/PURGE'
+    Runs the Copy-Files module to copy file 'C:\Files\File.txt' and directory 'C:\Folder' into directory 'D:\BackupFolder' with robocopy options /E and /PURGE.
 
     .NOTES
     Copy-Files serves as a wrapper around Robocopy as a convenient and automatable file and directory copying solution.
@@ -38,128 +34,115 @@
 
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory=$True)]
-        [alias("c")]
-        [hashtable]$Config
+        [Parameter(Mandatory=$True, Position=0)]
+        [ValidateNotNullOrEmpty()]
+        [alias("s")]
+        [string[]]$Sources
+        ,
+        [Parameter(Mandatory=$True, Position=1)]
+        [ValidateNotNullOrEmpty()]
+        [alias("d")]
+        [string[]]$Destinations
+        ,
+        [Parameter(Mandatory=$False, Position=2)]
+        [ValidateNotNullOrEmpty()]
+        [alias("o")]
+        [string[]]$RobocopyOptions
     )
 
-    # Retrieve the respective arrays from the config hashtable
-    $sources = $Config.Sources
-    $destinations = $Config.Destinations
-    $robocopy_options = $Config.Robocopy_options
+    # Trim arrays
+    $sourcesFiltered = $Sources | ForEach-Object {
+        $item = $_.Trim()
+        if ($item) { $item }
+    }
+    $destinationsFiltered = $Destinations | ForEach-Object {
+        $item = $_.Trim()
+        if ($item) { $item }
+    }
+    if ($RobocopyOptions) {
+        $RobocopyOptionsFiltered = $RobocopyOptions | ForEach-Object {
+            $item = $_.Trim()
+            if ($item) { $item }
+        }
+    }
+
+    # Initialize source variables
+    $sourcesCollection = @()
+    $sourcesInvalidCollection = @()
+
+    # Gather sources
+    $sourcesFiltered | ForEach-Object {
+        try {
+            $sourcesCollection += Get-Item $_ -Force -ErrorAction Stop
+        } catch {
+            $sourcesInvalidCollection += $_.TargetObject
+        }
+    }
+    if ($sourcesCollection.Count -eq 0) { Write-Output "All sources specified cannot be found or are empty strings. Exiting."; return }
+
+    # Gather destinations
+    $destinationsCollection = $destinationsFiltered
+    if ($destinationsCollection.Count -eq 0) { Write-Output "All destinations specified are empty strings. Exiting."; return }
+
+    # Gather robocopy options
+    $RobocopyOptionsCollection = $RobocopyOptionsFiltered
 
     # Signal Start
     Write-Output "-------------  Copy-Files Started: $(Get-Date)  -------------"
 
-    # Return if sources or destinations are null
-    if ($sources.count -eq 0) {
-        Write-Output "No sources were specified. Exiting."
-        return
-    }
-    if ($destinations.count -eq 0) {
-        Write-Output "No destinations were specified. Exiting."
-        return
-    }
-
-    # Trim config arrays
-    $sources = $sources.Trim()
-    $destinations = $destinations.Trim()
-    if ($robocopy_options.count -gt 0) {
-        $robocopy_options = $robocopy_options.Trim()
-    }
-
-    # Initialize source variables
-    $sources_valid = @()
-    $sources_invalid = @()
-    $sources_empty_cnt = 0
-
-    # Store valid and invalid sources into separate arrays, and count the number of empty strings
-    foreach ($source in $sources) {
-        try {
-            $source_valid = Get-Item $source -Force -ErrorAction Stop
-            $sources_valid += $source_valid
-        }
-        catch {
-            $e = $_.Exception.Gettype().Name
-            if ($e -eq 'ItemNotFoundException') {
-                $sources_invalid += $source
-            }
-            if ($e -eq 'ParameterBindingValidationException') {
-                $sources_empty_cnt++
-            }
-        }
-    }
-
-    # Return if all sources are invalid
-    if ($sources_valid.count -eq 0) {
-        Write-Output "All the sources specified either cannot be found or are empty strings. Exiting."
-        return
-    }
-
-    # Initialize destination variables
-    $destinations_valid = @()
-    $destinations_empty_cnt = 0
-
-    # Store valid destinations into separate array, and count the number of empty strings
-    foreach ($destination in $destinations) {
-        if ($destination -ne '') {
-            $destinations_valid += $destination
-        }
-        if ($destination -eq '') {
-            $destinations_empty_cnt++
-        }
-    }
-
-    # Return if all destinations are empty strings
-    if ($destinations_valid.count -eq 0) {
-        Write-Output "All destinations specified are empty strings. Exiting."
-        return
-    }
-
-    # Define command variable
-    $cmd = 'robocopy'
-
     # Signal Summary
     Write-Host "`n- - - - -`n SUMMARY`n- - - - -" -ForegroundColor Cyan
 
-    # Print Summary
-    Write-Output "`nSources:" $sources_valid.FullName
-    if ($sources_invalid.count -gt 0) {
-        Write-Output "`nSources (Not Found):" $sources_invalid
+    # Print summary
+    Write-Output "`nSources:"
+    Write-Output $sourcesCollection.FullName
+    if ($sourcesInvalidCollection.Count -gt 0) {
+        Write-Output "`nSources (Invalid):"
+        Write-Output $sourcesInvalidCollection
     }
-    if ($sources_empty_cnt -gt 0) {
-        Write-Output "`nSources (Empty Strings): $sources_empty_cnt"
+    Write-Output "`nDestinations:"
+    Write-Output $destinationsCollection
+    if ($RobocopyOptionsCollection.Count -gt 0) {
+        Write-Output "`nRobocopy Options:"
+        Write-Output $RobocopyOptionsCollection
     }
-    Write-Output "`nDestinations:" $destinations_valid
-    if ($destinations_empty_cnt -gt 0) {
-        Write-Output "`nDestinations (Empty Strings): $destinations_empty_cnt"
-    }
-    if ($robocopy_options.count -gt 0) {
-        Write-Output "`nRobocopy Options: `n$robocopy_options"
-    }
+
+    # Define constants
+    Set-Variable -Name 'ROBOCOPY_BIN' -Value 'robocopy' -Option Constant
 
     # Signal start copy
-    Write-Host "`n`n- - - -`n START`n- - - -" -ForegroundColor Green
+    Write-Host "`n- - - -`n START`n- - - -" -ForegroundColor Green
 
-    # Make a copy of valid sources to each valid destination
-    foreach ($destination_valid in $destinations_valid) {
-        Write-Host "`nDestination: $destination_valid" -ForegroundColor Green -BackgroundColor Black
+    # Perform for each destination
+    $destinationsCollection | ForEach-Object {
+        $_destination = $_
+        Write-Host "`nDestination: $_destination" -ForegroundColor Green
 
-        foreach ($source_valid in $sources_valid) {
-            Write-Host "`nSource: $($source_valid.FullName)" -ForegroundColor Yellow -BackgroundColor Black
-            Write-Host "Type: $($source_valid.Attributes)" -ForegroundColor Yellow
+        # Perform for each source
+        $sourcesCollection | ForEach-Object {
+            $_source = $_
+            Write-Host "`nSource: $($_source.FullName)" -ForegroundColor Yellow
+            Write-Host "Type: $($_source.Attributes)" -ForegroundColor Yellow
 
-            # Define parameters depending on whether source is a file or directory
-            if (!$source_valid.PSIsContainer) {
-                $prm = $source_valid.DirectoryName, $destination_valid, $source_valid.Name + ($robocopy_options | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S') } )      # /MIR, /E, /S will be ignored for file sources
+            # Define arguments depending on whether source is a file or directory
+            if ($_source.PSIsContainer -eq $false) {
+                $robocopyArgs = @(
+                    $_source.DirectoryName
+                    $_destination
+                    $_source.Name
+                    $RobocopyOptionsCollection | Where-Object { ($_ -ne '/MIR') -and ($_ -ne '/E') -and ($_ -ne '/S') }       # /MIR, /E, /S will be ignored for file sources
+                )
+            } else {
+                $robocopyArgs = @(
+                    $_source.FullName
+                    "$($_destination)\$($_source.Name)"
+                    $RobocopyOptionsCollection
+                )
             }
-            elseif ($source_valid.PSIsContainer) {
-                $prm = $source_valid.FullName, "$($destination_valid)\$($source_valid.Name)" + $robocopy_options
-            }
 
-            # Execute Robocopy with set parameters
-            Write-Host "Command: $($cmd) $($prm)" -ForegroundColor Yellow
-            & $cmd $prm
+            # Execute Robocopy with set arguments
+            Write-Host "Command: $($ROBOCOPY_BIN) $($robocopyArgs)" -ForegroundColor Yellow
+            & $ROBOCOPY_BIN $robocopyArgs
         }
 
     }

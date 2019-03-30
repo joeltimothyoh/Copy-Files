@@ -62,4 +62,4 @@ Robocopy_options = @(
 Import-Module Copy-Files
 
 # Run Copy-Files with the following configuration hashtable
-Copy-Files -Config $Config
+Copy-Files @Config

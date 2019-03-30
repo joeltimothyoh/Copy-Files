@@ -75,11 +75,14 @@ Refer to Microsoft's documentation or guides for further help on using *Task Sch
 ## Parameters
 
 ```powershell
-Copy-Files [-Config] <Hashtable> [<CommonParameters>]
+Copy-Files [-Sources] <String[]> [-Destinations] <String[]> [[-RobocopyOptions] <String[]>] [<CommonParameters>]
 
 PARAMETERS
-    -Config <Hashtable>
-        The configuration hashtable containing sources, destinations, and robocopy options to be used by Copy-Files.
+    -Sources <String[]>
+
+    -Destinations <String[]>
+
+    -RobocopyOptions <String[]>
 
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -100,18 +103,11 @@ Runs the script `Copy-Files-Project1.ps1` within the working directory in the cu
 
 #### Example 2
 
-Runs the script `Copy-Files-Project1.ps1` within the specified path in an instance of Powershell.
+Runs the `Copy-Files` module to copy file `C:\Files\File.txt` and directory `C:\Folder` into directory `D:\BackupFolder` with robocopy options `/E` and `/PURGE`.
 
 ```powershell
-Powershell "C:\scripts\Copy-Files\Copy-Files-Project1.ps1"
-```
+Copy-Files -Sources 'C:\Files\File.txt','C:\Folder' -Destinations 'D:\BackupFolder' -RobocopyOptions '/E','/PURGE'
 
-#### Example 3
-
-Runs the `Copy-Files` module with the configuration hashtable named `$myconfig`.
-
-```powershell
-Copy-Files -Config $myconfig
 ```
 
 ## Security
