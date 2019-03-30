@@ -10,8 +10,14 @@ Sources and destinations paths can either be local (e.g. 'C:\Folder'), network (
 Specify the sources, destinations, and robocopy options within a Copy-Files standalone or configuration script. Then manually run the script, or set it to run on a schedule.
 To copy in batches, repeat the same steps for each batch of files and directories to be copied, giving each script a unique name of your choice.
 
-.PARAMETER Config
-The configuration hashtable containing sources, destinations, and robocopy options to be used by Copy-Files.
+.PARAMETER Sources
+Files or directories to copy.
+
+.PARAMETER Destinations
+Destination directories to copy sources to.
+
+.PARAMETER RobocopyOptions
+Robocopy options to use for copy operations.
 
 .EXAMPLE
 .\Copy-Files-Project1.ps1
