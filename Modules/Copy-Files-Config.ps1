@@ -25,7 +25,7 @@ Destinations = @(
 ##############################   Robocopy options   ###############################
 
 # Refer to Robocopy's documentation for more options
-Robocopy_options = @(
+RobocopyOptions = @(
       '/E'                       # Copy subdirectories including empty ones
     # '/S'                       # Copy subdirectories excluding empty ones
     # '/PURGE'                   # Remove files or directories present in destination but not in source
